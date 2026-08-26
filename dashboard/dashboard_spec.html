@@ -1,0 +1,967 @@
+<title>DCI Dashboard Spec</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg:        #0D0F18;
+    --surface:   #151824;
+    --card:      #1C2030;
+    --border:    #252A3D;
+    --border-l:  #2E3450;
+    --text-p:    #ECF0FB;
+    --text-s:    #8B95B8;
+    --text-m:    #4A5270;
+    --blue:      #4CC9F0;
+    --purple:    #7B8CDE;
+    --high:      #E63946;
+    --med:       #F4A261;
+    --low:       #52B788;
+    --yellow:    #F2C811;
+    --mono:      'IBM Plex Mono', monospace;
+    --sans:      'IBM Plex Sans', system-ui, sans-serif;
+    --serif:     'DM Serif Display', Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-p);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .top-bar {
+    background: var(--yellow);
+    color: #1a1200;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    padding: 6px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Header */
+  .doc-header {
+    padding: 52px 0 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .doc-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--yellow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.1;
+    color: var(--text-p);
+    margin-bottom: 10px;
+  }
+
+  .doc-sub {
+    font-size: 15px;
+    color: var(--text-s);
+    font-weight: 300;
+  }
+
+  /* Nav tabs */
+  .page-nav {
+    display: flex;
+    gap: 0;
+    margin-top: 40px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .page-tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: var(--text-m);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+
+  .page-tab.active {
+    color: var(--yellow);
+    border-bottom-color: var(--yellow);
+  }
+
+  .page-tab:hover:not(.active) { color: var(--text-s); }
+
+  /* Page panels */
+  .page-panel { display: none; padding: 36px 0; }
+  .page-panel.active { display: block; }
+
+  /* Section */
+  h2 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-p);
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-m);
+    margin: 28px 0 12px;
+  }
+
+  p {
+    color: var(--text-s);
+    margin-bottom: 14px;
+    max-width: 72ch;
+  }
+
+  /* KPI mock */
+  .kpi-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .kpi-mock {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    min-width: 150px;
+    flex: 1;
+  }
+
+  .kpi-mock-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-m);
+    margin-bottom: 8px;
+  }
+
+  .kpi-mock-val {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--text-p);
+    margin-bottom: 4px;
+  }
+
+  .kpi-mock-sub {
+    font-size: 11px;
+    color: var(--text-m);
+  }
+
+  .kpi-mock.accent-high { border-top: 2px solid var(--high); }
+  .kpi-mock.accent-med  { border-top: 2px solid var(--med);  }
+  .kpi-mock.accent-low  { border-top: 2px solid var(--low);  }
+  .kpi-mock.accent-blue { border-top: 2px solid var(--blue); }
+  .kpi-mock.accent-yel  { border-top: 2px solid var(--yellow);}
+
+  /* Visual blueprint */
+  .blueprint-grid {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .blueprint-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .blueprint-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .blueprint-grid.cols-1-2 { grid-template-columns: 1fr 2fr; }
+
+  .visual-block {
+    background: var(--card);
+    border: 1px solid var(--border-l);
+    border-radius: 6px;
+    padding: 18px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .visual-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    text-transform: uppercase;
+  }
+
+  .visual-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-p);
+  }
+
+  .visual-desc {
+    font-size: 12px;
+    color: var(--text-m);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .visual-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .field-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    background: rgba(76,201,240,0.1);
+    color: var(--blue);
+    border-radius: 2px;
+  }
+
+  /* DAX table */
+  .dax-block {
+    background: #0A0C14;
+    border: 1px solid var(--border-l);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+
+  .dax-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+
+  .dax-code {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-s);
+    line-height: 1.6;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .dax-comment { color: var(--text-m); }
+  .dax-func    { color: var(--blue);   }
+  .dax-string  { color: var(--low);    }
+  .dax-num     { color: var(--med);    }
+
+  /* Filter panel */
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .filter-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .filter-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--text-m);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .filter-type {
+    font-size: 12px;
+    color: var(--text-s);
+  }
+
+  .filter-field {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--purple);
+    margin-top: 3px;
+  }
+
+  /* Data model */
+  .model-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    overflow-x: auto;
+  }
+
+  .model-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 16px;
+    min-width: 880px;
+  }
+
+  .model-table {
+    background: #111422;
+    border: 1px solid var(--border-l);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .model-table-header {
+    background: #1C2030;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--blue);
+    border-bottom: 1px solid var(--border-l);
+  }
+
+  .model-table-row {
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-m);
+    border-bottom: 1px solid rgba(37,42,61,0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .model-table-row:last-child { border-bottom: none; }
+  .model-table-row.pk { color: var(--yellow); }
+  .model-table-row.fk { color: var(--purple); }
+
+  .col-type {
+    font-size: 10px;
+    color: var(--text-m);
+    opacity: 0.6;
+  }
+
+  /* Callout */
+  .callout {
+    background: rgba(76,201,240,0.07);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--text-s);
+  }
+
+  .callout strong { color: var(--blue); }
+
+  .callout.yellow {
+    background: rgba(242,200,17,0.07);
+    border-left-color: var(--yellow);
+  }
+  .callout.yellow strong { color: var(--yellow); }
+
+  @media (max-width: 680px) {
+    .blueprint-grid.cols-2,
+    .blueprint-grid.cols-3,
+    .blueprint-grid.cols-1-2 { grid-template-columns: 1fr; }
+    .kpi-mock { min-width: 140px; }
+  }
+</style>
+
+<div class="top-bar">⬛ POWER BI DASHBOARD SPECIFICATION — DIGITAL CRIME INVESTIGATION ⬛</div>
+
+<div class="wrap">
+  <div class="doc-header">
+    <div class="doc-eyebrow">Dashboard Specification · Power BI</div>
+    <h1>Fraud Investigation<br><em>Dashboard Design</em></h1>
+    <p class="doc-sub">4-Page Interactive Dashboard — Data Model, DAX Measures, Visual Blueprint &amp; Filter Logic</p>
+  </div>
+
+  <!-- Page Navigation -->
+  <nav class="page-nav">
+    <div class="page-tab active" onclick="switchTab(0)">Page 1 · Overview</div>
+    <div class="page-tab" onclick="switchTab(1)">Page 2 · Transaction Intelligence</div>
+    <div class="page-tab" onclick="switchTab(2)">Page 3 · Suspicious Activity</div>
+    <div class="page-tab" onclick="switchTab(3)">Page 4 · Case Drill-Down</div>
+    <div class="page-tab" onclick="switchTab(4)">Data Model</div>
+    <div class="page-tab" onclick="switchTab(5)">DAX Measures</div>
+  </nav>
+
+  <!-- PAGE 1 -->
+  <div class="page-panel active" id="panel-0">
+    <h2>Page 1 — Investigation Overview</h2>
+    <p>Halaman utama dashboard. Memberikan gambaran keseluruhan kondisi fraud platform — metric utama, trend, dan distribusi risiko dalam satu pandangan eksekutif.</p>
+
+    <h3>KPI Cards (Row 1)</h3>
+    <div class="kpi-row">
+      <div class="kpi-mock accent-blue">
+        <div class="kpi-mock-label">Total Transactions</div>
+        <div class="kpi-mock-val">433</div>
+        <div class="kpi-mock-sub">Jan–Jun 2024</div>
+      </div>
+      <div class="kpi-mock accent-blue">
+        <div class="kpi-mock-label">Total Value</div>
+        <div class="kpi-mock-val">Rp 156M</div>
+        <div class="kpi-mock-sub">Combined all txn</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Suspicious Txn</div>
+        <div class="kpi-mock-val">133</div>
+        <div class="kpi-mock-sub">30.7% of total</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">High Risk Users</div>
+        <div class="kpi-mock-val">9</div>
+        <div class="kpi-mock-sub">Score ≥ 61</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Potential Loss</div>
+        <div class="kpi-mock-val">Rp 87.2M</div>
+        <div class="kpi-mock-sub">Refund exposure</div>
+      </div>
+    </div>
+
+    <h3>Visuals Layout</h3>
+    <div class="blueprint-grid cols-1-2">
+      <div class="visual-block">
+        <div class="visual-type">Donut Chart</div>
+        <div class="visual-title">Risk Level Distribution</div>
+        <div class="visual-desc">Proporsi HIGH / MEDIUM / LOW dari semua flagged users. Color: red / orange / green.</div>
+        <div class="visual-fields">
+          <span class="field-chip">risk_level</span>
+          <span class="field-chip">COUNT(user_id)</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Line Chart</div>
+        <div class="visual-title">Monthly Transaction Volume &amp; Suspicious Trend</div>
+        <div class="visual-desc">Dual axis: total txn count (bar) + suspicious txn count (line) per bulan. Tooltip: total value.</div>
+        <div class="visual-fields">
+          <span class="field-chip">Month</span>
+          <span class="field-chip">[Total Transactions]</span>
+          <span class="field-chip">[Suspicious Transactions]</span>
+        </div>
+      </div>
+    </div>
+    <div class="blueprint-grid cols-2">
+      <div class="visual-block">
+        <div class="visual-type">Stacked Bar</div>
+        <div class="visual-title">Transaction Value by Category</div>
+        <div class="visual-desc">Nilai total per kategori, warna dibagi normal vs refunded.</div>
+        <div class="visual-fields">
+          <span class="field-chip">category</span>
+          <span class="field-chip">SUM(amount)</span>
+          <span class="field-chip">refund_flag</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Table / Matrix</div>
+        <div class="visual-title">Investigation Case Register</div>
+        <div class="visual-desc">Tabel ringkas 8 kasus: Case ID, type, risk level, users, exposure. Clickable untuk drill-down ke Page 4.</div>
+        <div class="visual-fields">
+          <span class="field-chip">case_id</span>
+          <span class="field-chip">case_type</span>
+          <span class="field-chip">risk_level</span>
+          <span class="field-chip">[Exposure Amount]</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Page Filters</h3>
+    <div class="filter-grid">
+      <div class="filter-card">
+        <div class="filter-label">Date Range</div>
+        <div class="filter-type">Date Slicer</div>
+        <div class="filter-field">transactions[timestamp]</div>
+      </div>
+      <div class="filter-card">
+        <div class="filter-label">Risk Level</div>
+        <div class="filter-type">Dropdown / Chip</div>
+        <div class="filter-field">risk_scores[risk_level]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page-panel" id="panel-1">
+    <h2>Page 2 — Transaction Intelligence</h2>
+    <p>Analisis mendalam tentang karakteristik transaksi normal — distribusi, pola waktu, lokasi, dan payment method. Halaman ini membangun baseline sebelum anomali ditampilkan.</p>
+
+    <h3>KPI Cards</h3>
+    <div class="kpi-row">
+      <div class="kpi-mock accent-blue">
+        <div class="kpi-mock-label">Median Amount</div>
+        <div class="kpi-mock-val">Rp 258K</div>
+        <div class="kpi-mock-sub">50th percentile</div>
+      </div>
+      <div class="kpi-mock accent-blue">
+        <div class="kpi-mock-label">p95 Amount</div>
+        <div class="kpi-mock-val">Rp 1.1M</div>
+        <div class="kpi-mock-sub">High-value threshold</div>
+      </div>
+      <div class="kpi-mock accent-med">
+        <div class="kpi-mock-label">Refund Rate</div>
+        <div class="kpi-mock-val">2.8%</div>
+        <div class="kpi-mock-sub">Population average</div>
+      </div>
+      <div class="kpi-mock accent-med">
+        <div class="kpi-mock-label">Peak Hour</div>
+        <div class="kpi-mock-val">14:00</div>
+        <div class="kpi-mock-sub">Most active hour</div>
+      </div>
+    </div>
+
+    <h3>Visuals Layout</h3>
+    <div class="blueprint-grid cols-2">
+      <div class="visual-block">
+        <div class="visual-type">Histogram (Column Chart)</div>
+        <div class="visual-title">Transaction Amount Distribution</div>
+        <div class="visual-desc">Bin-based histogram, X = amount range (Rp50K, 100K, 250K, 500K, 1M, 5M, 10M+), Y = count. Reference lines: p50, p95.</div>
+        <div class="visual-fields">
+          <span class="field-chip">amount_bin</span>
+          <span class="field-chip">COUNT</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Heatmap / Matrix</div>
+        <div class="visual-title">Transactions by Hour × Day of Week</div>
+        <div class="visual-desc">Grid: rows = hari (Sen–Min), kolom = jam (00–23). Warna intensity = jumlah transaksi. Tooltip: avg amount.</div>
+        <div class="visual-fields">
+          <span class="field-chip">day_of_week</span>
+          <span class="field-chip">hour_of_day</span>
+          <span class="field-chip">COUNT</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Filled Map / Bar Chart</div>
+        <div class="visual-title">Transaction Volume by City</div>
+        <div class="visual-desc">Bar horizontal diurutkan descending. Warna secondary = refund rate per kota. Tooltip: unique users.</div>
+        <div class="visual-fields">
+          <span class="field-chip">location_id</span>
+          <span class="field-chip">COUNT</span>
+          <span class="field-chip">[Refund Rate]</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Pie + Table</div>
+        <div class="visual-title">Payment Method Share &amp; Refund Rate</div>
+        <div class="visual-desc">Pie: proporsi txn per payment method. Side table: refund rate dan avg amount per method.</div>
+        <div class="visual-fields">
+          <span class="field-chip">payment_method</span>
+          <span class="field-chip">COUNT</span>
+          <span class="field-chip">[Refund Rate]</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Page Filters</h3>
+    <div class="filter-grid">
+      <div class="filter-card">
+        <div class="filter-label">Date Range</div>
+        <div class="filter-type">Date Slicer</div>
+        <div class="filter-field">transactions[timestamp]</div>
+      </div>
+      <div class="filter-card">
+        <div class="filter-label">Category</div>
+        <div class="filter-type">Multi-select Dropdown</div>
+        <div class="filter-field">transactions[category]</div>
+      </div>
+      <div class="filter-card">
+        <div class="filter-label">Payment Method</div>
+        <div class="filter-type">Multi-select Chips</div>
+        <div class="filter-field">transactions[payment_method]</div>
+      </div>
+      <div class="filter-card">
+        <div class="filter-label">Transaction Status</div>
+        <div class="filter-type">Dropdown</div>
+        <div class="filter-field">transactions[transaction_status]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page-panel" id="panel-2">
+    <h2>Page 3 — Suspicious Activity</h2>
+    <p>Halaman investigasi utama. Menampilkan hasil semua 7 anomaly indicators, top suspicious users, device analysis, dan visualisasi pola burst + refund abuse.</p>
+
+    <h3>KPI Cards</h3>
+    <div class="kpi-row">
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Impossible Travel</div>
+        <div class="kpi-mock-val">3</div>
+        <div class="kpi-mock-sub">Users flagged</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Burst Events</div>
+        <div class="kpi-mock-val">2</div>
+        <div class="kpi-mock-sub">Users · 12 burst txn</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Refund Abusers</div>
+        <div class="kpi-mock-val">3</div>
+        <div class="kpi-mock-sub">Rate > 5× avg</div>
+      </div>
+      <div class="kpi-mock accent-high">
+        <div class="kpi-mock-label">Shared Devices</div>
+        <div class="kpi-mock-val">2</div>
+        <div class="kpi-mock-sub">D0150, D0151</div>
+      </div>
+    </div>
+
+    <h3>Visuals Layout</h3>
+    <div class="blueprint-grid cols-2">
+      <div class="visual-block">
+        <div class="visual-type">Bar Chart (Sorted)</div>
+        <div class="visual-title">Top Suspicious Users by Risk Score</div>
+        <div class="visual-desc">Horizontal bar. Bar color = risk level (red/orange/green). Conditional formatting on score. Tooltip: triggered indicators.</div>
+        <div class="visual-fields">
+          <span class="field-chip">user_id</span>
+          <span class="field-chip">composite_score</span>
+          <span class="field-chip">risk_level</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Scatter Chart</div>
+        <div class="visual-title">Risk Score vs Refund Rate</div>
+        <div class="visual-desc">X = composite_score, Y = refund_rate, size = total_amount. Color = risk_level. Quadrant lines at score=31, rate=5%.</div>
+        <div class="visual-fields">
+          <span class="field-chip">composite_score</span>
+          <span class="field-chip">refund_rate</span>
+          <span class="field-chip">total_amount</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Table (Highlighted)</div>
+        <div class="visual-title">Refund Abuse Detail</div>
+        <div class="visual-desc">Tabel: user_id, txn_count, refund_count, refund_rate, refunded_amount. Conditional formatting: refund_rate > 10% = red background.</div>
+        <div class="visual-fields">
+          <span class="field-chip">user_id</span>
+          <span class="field-chip">refund_count</span>
+          <span class="field-chip">[Refund Rate]</span>
+          <span class="field-chip">[Refunded Amount]</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Network Graph / Matrix</div>
+        <div class="visual-title">Shared Device Account Mapping</div>
+        <div class="visual-desc">Matrix: device_id vs user_id dengan dot jika ada koneksi. Atau bar chart: devices yang digunakan &gt;1 akun, annotated dengan account names.</div>
+        <div class="visual-fields">
+          <span class="field-chip">device_id</span>
+          <span class="field-chip">user_id</span>
+          <span class="field-chip">COUNT(DISTINCT user)</span>
+        </div>
+      </div>
+    </div>
+    <div class="blueprint-grid cols-1-2">
+      <div class="visual-block">
+        <div class="visual-type">Bar — Indicator Count</div>
+        <div class="visual-title">Anomaly Indicator Frequency</div>
+        <div class="visual-desc">Berapa banyak user terkena tiap indicator A–G. Sorted descending.</div>
+        <div class="visual-fields">
+          <span class="field-chip">indicator_name</span>
+          <span class="field-chip">user_count</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Timeline / Gantt-style</div>
+        <div class="visual-title">Burst Transaction Timeline (U0045, U0089)</div>
+        <div class="visual-desc">Timeline visual: setiap titik = satu transaksi, X = timestamp, ukuran titik = amount. Highlight window 10 menit sebagai shaded region.</div>
+        <div class="visual-fields">
+          <span class="field-chip">timestamp</span>
+          <span class="field-chip">amount</span>
+          <span class="field-chip">user_id</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="page-panel" id="panel-3">
+    <h2>Page 4 — Investigation Case Drill-Down</h2>
+    <p>Halaman interaktif yang dapat difilter per case. Menampilkan profile user, evidence chain, timeline, dan financial impact secara detail untuk setiap kasus.</p>
+
+    <div class="callout yellow">
+      <strong>Interactivity:</strong> User memilih Case ID dari slicer → semua visual otomatis filter ke data kasus tersebut. Navigasi antar kasus tidak membutuhkan reload.
+    </div>
+
+    <h3>Page Controls</h3>
+    <div class="filter-grid">
+      <div class="filter-card">
+        <div class="filter-label">Case Selector</div>
+        <div class="filter-type">Single-select Slicer</div>
+        <div class="filter-field">cases[case_id]</div>
+      </div>
+      <div class="filter-card">
+        <div class="filter-label">User within Case</div>
+        <div class="filter-type">Dropdown</div>
+        <div class="filter-field">cases[user_id]</div>
+      </div>
+    </div>
+
+    <h3>Case Identity Card (Top-Left)</h3>
+    <div class="callout">
+      <strong>Displays:</strong> Case ID · Case Type · Risk Level (colored badge) · Indicator list with ✓/✗ · Composite Score gauge
+    </div>
+
+    <h3>Visuals Layout</h3>
+    <div class="blueprint-grid cols-2">
+      <div class="visual-block">
+        <div class="visual-type">Card — User Profile</div>
+        <div class="visual-title">Subject Profile</div>
+        <div class="visual-desc">User ID, kota, usia akun, total txn, avg amount, device count, refund rate. Flagged indicators ditampilkan sebagai chips berwarna.</div>
+        <div class="visual-fields">
+          <span class="field-chip">users.*</span>
+          <span class="field-chip">[Composite Score]</span>
+          <span class="field-chip">[Triggered Indicators]</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Timeline / Table</div>
+        <div class="visual-title">Transaction Evidence Chain</div>
+        <div class="visual-desc">Semua transaksi user diurutkan timestamp. Kolom: ID, waktu, lokasi, amount, device, refund. Row highlight merah untuk suspicious transactions.</div>
+        <div class="visual-fields">
+          <span class="field-chip">transaction_id</span>
+          <span class="field-chip">timestamp</span>
+          <span class="field-chip">location_id</span>
+          <span class="field-chip">amount</span>
+          <span class="field-chip">refund_flag</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">Scatter / Timeline</div>
+        <div class="visual-title">Transaction Amount Over Time</div>
+        <div class="visual-desc">X = timestamp, Y = amount. Dots berwarna: merah = refunded, abu = normal. Garis referensi: p95 threshold.</div>
+        <div class="visual-fields">
+          <span class="field-chip">timestamp</span>
+          <span class="field-chip">amount</span>
+          <span class="field-chip">refund_flag</span>
+        </div>
+      </div>
+      <div class="visual-block">
+        <div class="visual-type">KPI Cards (2×2)</div>
+        <div class="visual-title">Case Financial Impact</div>
+        <div class="visual-desc">Total Transaction Value · Refunded Amount · Chargeback Amount · Estimated Exposure. Cards berwarna merah untuk nilai yang signifikan.</div>
+        <div class="visual-fields">
+          <span class="field-chip">[Total Amount]</span>
+          <span class="field-chip">[Refunded Amount]</span>
+          <span class="field-chip">[Chargeback Amount]</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Investigation Conclusion (Bottom)</h3>
+    <div class="callout">
+      <strong>Text card berisi:</strong> Indicator yang terpicu · Rekomendasi tindakan (Freeze / Monitor / Verify) · Estimated exposure · Next steps.
+    </div>
+  </div>
+
+  <!-- DATA MODEL -->
+  <div class="page-panel" id="panel-4">
+    <h2>Data Model — Star Schema</h2>
+    <p>Dashboard menggunakan star schema dengan <code>transactions</code> sebagai fact table dan tiga dimension tables. Relasi one-to-many dari setiap dimensi ke fact.</p>
+
+    <div class="model-wrap">
+      <div class="model-grid">
+        <div class="model-table">
+          <div class="model-table-header">📋 transactions (Fact)</div>
+          <div class="model-table-row pk"><span>transaction_id</span><span class="col-type">PK · STR</span></div>
+          <div class="model-table-row fk"><span>user_id</span><span class="col-type">FK · STR</span></div>
+          <div class="model-table-row fk"><span>merchant_id</span><span class="col-type">FK · STR</span></div>
+          <div class="model-table-row fk"><span>device_id</span><span class="col-type">FK · STR</span></div>
+          <div class="model-table-row"><span>timestamp</span><span class="col-type">DT</span></div>
+          <div class="model-table-row"><span>amount</span><span class="col-type">FLOAT</span></div>
+          <div class="model-table-row"><span>category</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>location_id</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>payment_method</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>transaction_status</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>refund_flag</span><span class="col-type">INT</span></div>
+          <div class="model-table-row"><span>chargeback_flag</span><span class="col-type">INT</span></div>
+        </div>
+        <div class="model-table">
+          <div class="model-table-header">👤 users (Dim)</div>
+          <div class="model-table-row pk"><span>user_id</span><span class="col-type">PK · STR</span></div>
+          <div class="model-table-row"><span>username</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>city</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>age_group</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>account_status</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>account_age_days</span><span class="col-type">INT</span></div>
+          <div class="model-table-row"><span>registration_date</span><span class="col-type">DATE</span></div>
+          <div class="model-table-row"><span>risk_score</span><span class="col-type">INT</span></div>
+        </div>
+        <div class="model-table">
+          <div class="model-table-header">📱 devices (Dim)</div>
+          <div class="model-table-row pk"><span>device_id</span><span class="col-type">PK · STR</span></div>
+          <div class="model-table-row"><span>device_type</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>operating_system</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>first_seen</span><span class="col-type">DT</span></div>
+          <div class="model-table-row"><span>last_seen</span><span class="col-type">DT</span></div>
+        </div>
+        <div class="model-table">
+          <div class="model-table-header">🏪 merchants (Dim)</div>
+          <div class="model-table-row pk"><span>merchant_id</span><span class="col-type">PK · STR</span></div>
+          <div class="model-table-row"><span>merchant_name</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>category</span><span class="col-type">STR</span></div>
+          <div class="model-table-row"><span>city</span><span class="col-type">STR</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px">
+      <strong>Additional tables:</strong> <code>risk_scores</code> (computed dari notebooks — user_id, composite_score, risk_level, triggered_indicators) dan <code>date_table</code> (generated di Power BI untuk time intelligence).
+    </div>
+  </div>
+
+  <!-- DAX MEASURES -->
+  <div class="page-panel" id="panel-5">
+    <h2>DAX Measures</h2>
+    <p>Semua calculated measures untuk dashboard. Dikelompokkan berdasarkan domain.</p>
+
+    <h3>Transaction Metrics</h3>
+
+    <div class="dax-block">
+      <div class="dax-name">Total Transactions</div>
+      <div class="dax-code"><span class="dax-func">COUNTROWS</span>(transactions)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Total Transaction Value</div>
+      <div class="dax-code"><span class="dax-func">SUM</span>(transactions[amount])</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Average Transaction Value</div>
+      <div class="dax-code"><span class="dax-func">AVERAGE</span>(transactions[amount])</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Median Transaction Value</div>
+      <div class="dax-code"><span class="dax-func">MEDIAN</span>(transactions[amount])</div>
+    </div>
+
+    <h3>Risk & Suspicious Metrics</h3>
+
+    <div class="dax-block">
+      <div class="dax-name">Suspicious Transactions</div>
+      <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">COUNTROWS</span>(transactions),
+    transactions[refund_flag] = <span class="dax-num">1</span>
+        || transactions[chargeback_flag] = <span class="dax-num">1</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Suspicious Transaction Rate</div>
+      <div class="dax-code"><span class="dax-func">DIVIDE</span>(
+    [Suspicious Transactions],
+    [Total Transactions],
+    <span class="dax-num">0</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">High Risk Users</div>
+      <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">COUNTROWS</span>(risk_scores),
+    risk_scores[risk_level] = <span class="dax-string">"HIGH"</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Composite Risk Score (User)</div>
+      <div class="dax-code"><span class="dax-func">RELATED</span>(risk_scores[composite_score])</div>
+    </div>
+
+    <h3>Financial Impact</h3>
+
+    <div class="dax-block">
+      <div class="dax-name">Refunded Amount</div>
+      <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">SUM</span>(transactions[amount]),
+    transactions[refund_flag] = <span class="dax-num">1</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Chargeback Amount</div>
+      <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">SUM</span>(transactions[amount]),
+    transactions[chargeback_flag] = <span class="dax-num">1</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Refund Rate</div>
+      <div class="dax-code"><span class="dax-func">DIVIDE</span>(
+    <span class="dax-func">CALCULATE</span>(<span class="dax-func">COUNTROWS</span>(transactions), transactions[refund_flag] = <span class="dax-num">1</span>),
+    <span class="dax-func">COUNTROWS</span>(transactions),
+    <span class="dax-num">0</span>
+)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Potential Loss Exposure</div>
+      <div class="dax-code"><span class="dax-comment">-- Refunded + chargeback on high-risk transactions (score >= 31)</span>
+<span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">SUM</span>(transactions[amount]),
+    <span class="dax-func">FILTER</span>(
+        transactions,
+        (transactions[refund_flag] = <span class="dax-num">1</span> || transactions[chargeback_flag] = <span class="dax-num">1</span>)
+            && <span class="dax-func">RELATED</span>(risk_scores[composite_score]) >= <span class="dax-num">31</span>
+    )
+)</div>
+    </div>
+
+    <h3>Time Intelligence</h3>
+
+    <div class="dax-block">
+      <div class="dax-name">Transactions MoM Growth</div>
+      <div class="dax-code"><span class="dax-func">VAR</span> CurrentMonth = [Total Transactions]
+<span class="dax-func">VAR</span> PriorMonth = <span class="dax-func">CALCULATE</span>(
+    [Total Transactions],
+    <span class="dax-func">PREVIOUSMONTH</span>(date_table[Date])
+)
+<span class="dax-func">RETURN DIVIDE</span>(CurrentMonth - PriorMonth, PriorMonth, <span class="dax-num">0</span>)</div>
+    </div>
+
+    <div class="dax-block">
+      <div class="dax-name">Peak Transaction Hour</div>
+      <div class="dax-code"><span class="dax-func">MAXX</span>(
+    <span class="dax-func">TOPN</span>(<span class="dax-num">1</span>,
+        <span class="dax-func">SUMMARIZE</span>(transactions, transactions[txn_hour], <span class="dax-string">"cnt"</span>, <span class="dax-func">COUNTROWS</span>(transactions)),
+        [cnt], <span class="dax-num">1</span>
+    ),
+    transactions[txn_hour]
+)</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(idx) {
+    document.querySelectorAll('.page-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.page-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+</script>

@@ -1,0 +1,1141 @@
+<title>DCI — Investigation Report</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* ── Tokens (dark-only deliberate design) ── */
+  :root {
+    --bg:          #0D0F18;
+    --surface:     #151824;
+    --card:        #1C2030;
+    --card-hover:  #212540;
+    --border:      #252A3D;
+    --border-light:#2E3450;
+    --text-primary:#ECF0FB;
+    --text-secondary:#8B95B8;
+    --text-muted:  #4A5270;
+    --accent-blue: #4CC9F0;
+    --accent-high: #E63946;
+    --accent-med:  #F4A261;
+    --accent-low:  #52B788;
+    --accent-info: #7B8CDE;
+    --mono-font:   'IBM Plex Mono', 'Courier New', monospace;
+    --sans-font:   'IBM Plex Sans', system-ui, sans-serif;
+    --serif-font:  'DM Serif Display', Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans-font);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Classification banner ── */
+  .classification-bar {
+    background: var(--accent-high);
+    color: #fff;
+    text-align: center;
+    font-family: var(--mono-font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    padding: 6px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── Layout ── */
+  .report-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── Document header ── */
+  .doc-header {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+  }
+
+  .doc-meta {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .doc-title {
+    font-family: var(--serif-font);
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    text-wrap: balance;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .doc-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .doc-stamp {
+    text-align: right;
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 2;
+  }
+  .doc-stamp strong {
+    color: var(--text-secondary);
+    display: block;
+    font-size: 12px;
+  }
+
+  /* ── Section ── */
+  section {
+    margin-top: 56px;
+  }
+
+  .section-label {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: var(--serif-font);
+    font-size: 28px;
+    color: var(--text-primary);
+    font-weight: 400;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-family: var(--sans-font);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin: 28px 0 12px;
+  }
+
+  p {
+    color: var(--text-secondary);
+    max-width: 72ch;
+    margin-bottom: 14px;
+  }
+
+  /* ── KPI tiles ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .kpi-tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 18px;
+  }
+
+  .kpi-label {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: var(--serif-font);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .kpi-tile.high  { border-left: 3px solid var(--accent-high); }
+  .kpi-tile.med   { border-left: 3px solid var(--accent-med);  }
+  .kpi-tile.info  { border-left: 3px solid var(--accent-blue); }
+  .kpi-tile.low   { border-left: 3px solid var(--accent-low);  }
+
+  /* ── Case cards ── */
+  .case-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .case-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .case-header:hover { background: var(--card-hover); }
+
+  .case-id {
+    font-family: var(--mono-font);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-blue);
+    white-space: nowrap;
+  }
+
+  .case-title-block { min-width: 0; }
+
+  .case-type {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono-font);
+    margin-bottom: 2px;
+  }
+
+  .case-name {
+    font-family: var(--sans-font);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .risk-badge {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .risk-badge.high   { background: rgba(230,57,70,0.15);  color: #E63946; border: 1px solid rgba(230,57,70,0.3); }
+  .risk-badge.medium { background: rgba(244,162,97,0.15); color: #F4A261; border: 1px solid rgba(244,162,97,0.3);}
+  .risk-badge.low    { background: rgba(82,183,136,0.15); color: #52B788; border: 1px solid rgba(82,183,136,0.3);}
+
+  .case-body {
+    padding: 20px 22px;
+    display: none;
+  }
+
+  .case-body.open { display: block; }
+
+  .case-summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    max-width: 80ch;
+  }
+
+  /* ── Evidence tables ── */
+  .evidence-table-wrap {
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 16px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono-font);
+    font-size: 12px;
+  }
+
+  th {
+    background: #111422;
+    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(76, 201, 240, 0.03); }
+
+  .td-txn   { color: var(--accent-blue); }
+  .td-user  { color: #A78BFA; }
+  .td-amt   { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .td-flag  { color: var(--accent-high); }
+  .td-ok    { color: var(--accent-low);  }
+  .td-city  { color: var(--accent-med);  }
+
+  .flag-yes { color: var(--accent-high); }
+  .flag-no  { color: var(--text-muted);  }
+
+  /* ── Finding callout ── */
+  .finding {
+    background: rgba(230,57,70,0.07);
+    border-left: 3px solid var(--accent-high);
+    border-radius: 0 4px 4px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .finding strong { color: var(--accent-high); }
+
+  .finding.medium {
+    background: rgba(244,162,97,0.07);
+    border-left-color: var(--accent-med);
+  }
+  .finding.medium strong { color: var(--accent-med); }
+
+  .finding.info {
+    background: rgba(76,201,240,0.07);
+    border-left-color: var(--accent-blue);
+  }
+  .finding.info strong { color: var(--accent-blue); }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 16px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border-light);
+  }
+
+  .tl-event {
+    position: relative;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+
+  .tl-event::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-light);
+    border: 2px solid var(--surface);
+  }
+
+  .tl-event.alert::before { background: var(--accent-high); }
+  .tl-event.warn::before  { background: var(--accent-med);  }
+  .tl-event.normal::before{ background: var(--text-muted);  }
+
+  .tl-time {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+
+  .tl-desc { color: var(--text-secondary); }
+
+  .tl-amount {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-left: 6px;
+  }
+
+  .tl-city {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--accent-med);
+    margin-left: 6px;
+  }
+
+  /* ── Risk register table ── */
+  .register-wrap {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .register-wrap table th { background: #0A0C14; }
+
+  .score-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .score-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-light);
+    width: 80px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .score-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .score-fill.high   { background: var(--accent-high); }
+  .score-fill.medium { background: var(--accent-med);  }
+  .score-fill.low    { background: var(--accent-low);  }
+
+  /* ── Methodology ── */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .method-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .method-indicator {
+    font-family: var(--mono-font);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent-blue);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .method-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .method-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .method-score {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    margin-top: 6px;
+    color: var(--accent-med);
+  }
+
+  /* ── Recommendations ── */
+  .rec-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rec-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .rec-num {
+    font-family: var(--mono-font);
+    font-size: 12px;
+    color: var(--accent-blue);
+    font-weight: 500;
+    padding-top: 1px;
+  }
+
+  .rec-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .rec-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .priority-chip {
+    display: inline-block;
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .priority-chip.urgent   { background: rgba(230,57,70,0.2);  color: var(--accent-high); }
+  .priority-chip.high-p   { background: rgba(244,162,97,0.2); color: var(--accent-med);  }
+  .priority-chip.medium-p { background: rgba(76,201,240,0.2); color: var(--accent-blue); }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .footer-right {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* ── Potential loss box ── */
+  .loss-box {
+    background: rgba(230,57,70,0.05);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: 6px;
+    padding: 20px 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+  }
+
+  .loss-item-label {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .loss-item-value {
+    font-family: var(--serif-font);
+    font-size: 24px;
+    color: var(--accent-high);
+  }
+
+  @media (max-width: 640px) {
+    .doc-header     { grid-template-columns: 1fr; }
+    .doc-stamp      { text-align: left; }
+    .loss-box       { grid-template-columns: 1fr; }
+    .kpi-grid       { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<!-- Classification Banner -->
+<div class="classification-bar">⬛ CONFIDENTIAL — INTERNAL USE ONLY — DIGITAL CRIME INVESTIGATION UNIT ⬛</div>
+
+<div class="report-wrap">
+
+  <!-- Document Header -->
+  <header class="doc-header">
+    <div>
+      <div class="doc-meta">Investigation Report · Case No. INV-2024-001</div>
+      <h1 class="doc-title">Transaction Fraud &amp;<br><em>Anomaly Investigation</em></h1>
+      <p class="doc-subtitle">Financial Leakage Analysis — Fintech Platform · Jan–Jun 2024</p>
+    </div>
+    <div class="doc-stamp">
+      <strong>ANALYST</strong>
+      Baskara Kresna Juniarto<br>
+      <strong>ISSUED</strong>
+      2024-07-01<br>
+      <strong>STATUS</strong>
+      Final<br>
+      <strong>CLASSIFICATION</strong>
+      Confidential
+    </div>
+  </header>
+
+
+  <!-- Executive Summary -->
+  <section>
+    <div class="section-label">Section 01</div>
+    <h2>Executive Summary</h2>
+
+    <p>Investigasi ini dilakukan atas permintaan manajemen setelah tim Finance mendeteksi anomali pada laporan refund dan transaksi bernilai tinggi. Analisis mencakup 433 transaksi dari 200 pengguna aktif selama periode Januari–Juni 2024.</p>
+
+    <p>Ditemukan <strong style="color:var(--text-primary)">8 kasus mencurigakan</strong> yang melibatkan <strong style="color:var(--text-primary)">28 akun unik</strong> dengan total estimasi potensi kerugian sebesar <strong style="color:var(--accent-high)">Rp 87,2 Juta</strong> yang terekspos melalui transaksi refund dan chargeback berisiko tinggi.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-tile high">
+        <div class="kpi-label">Total Flagged Cases</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-sub">Across 7 anomaly indicators</div>
+      </div>
+      <div class="kpi-tile high">
+        <div class="kpi-label">Accounts Under Review</div>
+        <div class="kpi-value">28</div>
+        <div class="kpi-sub">14% of active user base</div>
+      </div>
+      <div class="kpi-tile high">
+        <div class="kpi-label">Potential Loss Exposure</div>
+        <div class="kpi-value" style="font-size:22px">Rp 87.2M</div>
+        <div class="kpi-sub">Refunded high-risk transactions</div>
+      </div>
+      <div class="kpi-tile med">
+        <div class="kpi-label">High Risk Users</div>
+        <div class="kpi-value">9</div>
+        <div class="kpi-sub">Score ≥ 61</div>
+      </div>
+      <div class="kpi-tile med">
+        <div class="kpi-label">Medium Risk Users</div>
+        <div class="kpi-value">13</div>
+        <div class="kpi-sub">Score 31–60</div>
+      </div>
+      <div class="kpi-tile info">
+        <div class="kpi-label">Transactions Analyzed</div>
+        <div class="kpi-value">433</div>
+        <div class="kpi-sub">Jan–Jun 2024</div>
+      </div>
+    </div>
+
+    <div class="loss-box">
+      <div>
+        <div class="loss-item-label">Confirmed Refunded (High-Risk)</div>
+        <div class="loss-item-value">Rp 72.4M</div>
+      </div>
+      <div>
+        <div class="loss-item-label">Chargeback Exposure</div>
+        <div class="loss-item-value">Rp 14.8M</div>
+      </div>
+      <div>
+        <div class="loss-item-label">Transactions with Both Flags</div>
+        <div class="loss-item-value">11 txn</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Methodology -->
+  <section>
+    <div class="section-label">Section 02</div>
+    <h2>Methodology &amp; Anomaly Indicators</h2>
+
+    <p>Investigasi menggunakan 7 anomaly indicators dengan sistem scoring berbasis bobot. Setiap indikator berkontribusi pada composite risk score per pengguna. Risk level ditentukan berdasarkan total skor kumulatif.</p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-indicator">A</div>
+        <div>
+          <div class="method-title">Impossible Travel</div>
+          <div class="method-desc">Dua transaksi berurutan dari kota berbeda dengan jarak tempuh &lt; 60 menit.</div>
+          <div class="method-score">+35 pts · CRITICAL</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">B</div>
+        <div>
+          <div class="method-title">Transaction Burst</div>
+          <div class="method-desc">≥ 5 transaksi dari 1 pengguna dalam window 10 menit.</div>
+          <div class="method-score">+25 pts · HIGH</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">C</div>
+        <div>
+          <div class="method-title">Refund Abuse</div>
+          <div class="method-desc">Refund rate ≥ 5× rata-rata populasi (min. 5 transaksi).</div>
+          <div class="method-score">+20 pts · HIGH</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">D</div>
+        <div>
+          <div class="method-title">Unusual Amount</div>
+          <div class="method-desc">Transaksi melebihi 8× rata-rata historis pengguna per kategori.</div>
+          <div class="method-score">+20 pts · HIGH</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">E</div>
+        <div>
+          <div class="method-title">New Device + High Value</div>
+          <div class="method-desc">Penggunaan pertama device kombinasi dengan transaksi &gt; p95.</div>
+          <div class="method-score">+20 pts · HIGH</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">F</div>
+        <div>
+          <div class="method-title">Shared Device</div>
+          <div class="method-desc">Satu device_id digunakan oleh ≥ 2 akun berbeda.</div>
+          <div class="method-score">+15 pts · MEDIUM</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-indicator">G</div>
+        <div>
+          <div class="method-title">Unusual Location</div>
+          <div class="method-desc">Transaksi di luar kota asal dengan jumlah &gt; p75 pengguna.</div>
+          <div class="method-score">+10 pts · LOW</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="finding info">
+      <strong>Risk Level Thresholds:</strong> &nbsp;LOW = 0–30 pts &nbsp;|&nbsp; MEDIUM = 31–60 pts &nbsp;|&nbsp; HIGH = 61+ pts
+    </div>
+  </section>
+
+
+  <!-- Investigation Cases -->
+  <section>
+    <div class="section-label">Section 03</div>
+    <h2>Investigation Cases</h2>
+
+    <!-- CASE-001 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-001</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator A — Impossible Travel</div>
+          <div class="case-name">U0023 · Jakarta → Singapore in 14 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH · 55 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Pengguna U0023 melakukan transaksi normal di Jakarta pukul 10:03 WIB, kemudian dua transaksi bernilai tinggi tercatat di Singapore hanya 14 menit kemudian menggunakan device baru (D0099). Kedua transaksi Singapore mengajukan refund. Tidak ada penerbangan komersial yang dapat menempuh jarak Jakarta–Singapore dalam 14 menit.</p>
+
+        <h3>Evidence Chain — Transaction Timeline</h3>
+        <div class="timeline">
+          <div class="tl-event normal">
+            <div class="tl-time">2024-03-15 · 10:03 WIB</div>
+            <div class="tl-desc">T000301 — Normal transaction
+              <span class="tl-city">Jakarta</span>
+              <span class="tl-amount">Rp 120,000</span>
+            </div>
+          </div>
+          <div class="tl-event alert">
+            <div class="tl-time">2024-03-15 · 10:17 WIB <span style="color:var(--accent-high);margin-left:8px">⚠ +14 min · 1,637 km</span></div>
+            <div class="tl-desc">T000302 — <strong style="color:var(--accent-high)">HIGH VALUE · REFUNDED</strong> · Device D0099 (Mobile/iOS)
+              <span class="tl-city">Singapore</span>
+              <span class="tl-amount">Rp 8,500,000</span>
+            </div>
+          </div>
+          <div class="tl-event alert">
+            <div class="tl-time">2024-03-15 · 10:20 WIB</div>
+            <div class="tl-desc">T000303 — <strong style="color:var(--accent-high)">REFUNDED</strong> · Same device D0099
+              <span class="tl-city">Singapore</span>
+              <span class="tl-amount">Rp 4,200,000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Amount</th><th>Device</th><th>Refund</th><th>Chargeback</th></tr></thead>
+            <tbody>
+              <tr><td class="td-txn">T000301</td><td>10:03</td><td>Jakarta</td><td class="td-amt">Rp 120,000</td><td>D0023</td><td class="flag-no">—</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-txn">T000302</td><td>10:17</td><td class="td-city">Singapore</td><td class="td-amt">Rp 8,500,000</td><td class="td-flag">D0099</td><td class="flag-yes">YES</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-txn">T000303</td><td>10:20</td><td class="td-city">Singapore</td><td class="td-amt">Rp 4,200,000</td><td class="td-flag">D0099</td><td class="flag-yes">YES</td><td class="flag-no">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> Impossible travel confirmed. Device switch + geographic impossibility + immediate refunds on high-value transactions are strong indicators of account takeover or coordinated fraud. Estimated exposure: <strong>Rp 12,700,000</strong>.</div>
+      </div>
+    </div>
+
+    <!-- CASE-002 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-002</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator A — Impossible Travel</div>
+          <div class="case-name">U0067 · Bandung → Singapore in 13 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH · 45 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">U0067 bertransaksi di Bandung pukul 02:05 (transaksi senilai Rp 95.000, wajar), lalu 13 menit kemudian tercatat transaksi Rp 6,75 Juta di Singapore menggunakan device D0101 yang berbeda, dan langsung diajukan refund. Aktivitas jam 02:00 pagi menambah kewaspadaan.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Amount</th><th>Device</th><th>Refund</th></tr></thead>
+            <tbody>
+              <tr><td class="td-txn">T000304</td><td>02:05</td><td>Bandung</td><td class="td-amt">Rp 95,000</td><td>D0067</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-txn">T000305</td><td>02:18</td><td class="td-city">Singapore</td><td class="td-amt">Rp 6,750,000</td><td class="td-flag">D0101</td><td class="flag-yes">YES</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> Transaksi off-hours (02:00 dini hari) + impossible travel + device baru + immediate refund. Pattern identik dengan CASE-001. Kemungkinan aktor yang sama. Exposure: <strong>Rp 6,750,000</strong>.</div>
+      </div>
+    </div>
+
+    <!-- CASE-003 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-003</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator A — Impossible Travel (Multi-Hop)</div>
+          <div class="case-name">U0112 · Surabaya → Bali → Singapore in 27 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH · 55 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">U0112 menunjukkan pola impossible travel paling kompleks: 3 kota berbeda dalam 27 menit — Surabaya, Bali, lalu Singapore. Transaksi terakhir di Singapore (Rp 5,2 Juta) langsung direfund. Pola multi-hop ini mengindikasikan penggunaan relay/VPN atau account takeover terkoordinasi.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Gap</th><th>Amount</th><th>Device</th><th>Refund</th></tr></thead>
+            <tbody>
+              <tr><td class="td-txn">T000306</td><td>14:32</td><td>Surabaya</td><td>—</td><td class="td-amt">Rp 180,000</td><td>D0112</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-txn">T000307</td><td>14:44</td><td class="td-city">Bali</td><td>+12 min</td><td class="td-amt">Rp 3,900,000</td><td>D0112</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-txn">T000308</td><td>14:59</td><td class="td-city">Singapore</td><td>+15 min</td><td class="td-amt">Rp 5,200,000</td><td>D0112</td><td class="flag-yes">YES</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> Multi-hop impossible travel — escalating amount across 3 cities. Final transaction refunded. Exposure: <strong>Rp 5,200,000</strong>. Rekomendasi: blokir akun segera.</div>
+      </div>
+    </div>
+
+    <!-- CASE-004 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-004</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator B — Transaction Burst</div>
+          <div class="case-name">U0045 &amp; U0089 · 6× Rp 500K in 6 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH · 25 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Dua pengguna — U0045 dan U0089 — masing-masing melakukan 6 transaksi identik senilai Rp 500.000 dalam window 6 menit. Semua menggunakan e-wallet ke merchant transfer berbeda. Pola ini konsisten dengan credential stuffing atau automated transaction script.</p>
+
+        <h3>U0045 — Burst Window (02-14 · 01:02–01:07)</h3>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>TXN ID</th><th>Timestamp</th><th>Amount</th><th>Merchant</th><th>Category</th><th>Method</th></tr></thead>
+            <tbody>
+              <tr><td class="td-txn">T000309</td><td>01:02:00</td><td class="td-amt">Rp 500,000</td><td>M0005</td><td>transfer</td><td>e-wallet</td></tr>
+              <tr><td class="td-txn">T000310</td><td>01:03:00</td><td class="td-amt">Rp 500,000</td><td>M0006</td><td>transfer</td><td>e-wallet</td></tr>
+              <tr><td class="td-txn">T000311</td><td>01:04:00</td><td class="td-amt">Rp 500,000</td><td>M0062</td><td>transfer</td><td>e-wallet</td></tr>
+              <tr><td class="td-txn">T000312</td><td>01:05:00</td><td class="td-amt">Rp 500,000</td><td>M0037</td><td>transfer</td><td>e-wallet</td></tr>
+              <tr><td class="td-txn">T000313</td><td>01:06:00</td><td class="td-amt">Rp 500,000</td><td>M0078</td><td>transfer</td><td>e-wallet</td></tr>
+              <tr><td class="td-txn">T000314</td><td>01:07:00</td><td class="td-amt">Rp 500,000</td><td>M0021</td><td>transfer</td><td>e-wallet</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> 6 transaksi dengan amount identik, interval 60 detik, ke 6 merchant berbeda. Pola terlalu seragam untuk transaksi manusia. Total per user: <strong>Rp 3,000,000</strong>. Combined exposure U0045 + U0089: <strong>Rp 6,000,000</strong>.</div>
+      </div>
+    </div>
+
+    <!-- CASE-005 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-005</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator C — Refund Abuse</div>
+          <div class="case-name">U0034, U0078, U0156 · Systematic Refund Abuse</div>
+        </div>
+        <div class="risk-badge high">HIGH · 20 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Tiga pengguna menunjukkan pola refund abuse sistematis dengan refund rate jauh di atas rata-rata populasi (2,8%). U0156 adalah yang paling agresif dengan 30%+ refund rate dan multiple chargebacks — indikasi kuat buy-and-return fraud atau chargeback fraud.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>User</th><th>Total Txn</th><th>Refunds</th><th>Chargebacks</th><th>Refund Rate</th><th>Refunded Amount</th><th>vs Pop Avg</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-user">U0156</td><td>30</td><td>9</td><td class="td-flag">4</td>
+                <td class="td-flag">30.0%</td><td class="td-amt">Rp 6,170,000</td><td class="td-flag">10.7×</td>
+              </tr>
+              <tr>
+                <td class="td-user">U0078</td><td>28</td><td>8</td><td class="td-flag">3</td>
+                <td class="td-flag">28.6%</td><td class="td-amt">Rp 5,891,000</td><td class="td-flag">10.2×</td>
+              </tr>
+              <tr>
+                <td class="td-user">U0034</td><td>30</td><td>10</td><td class="td-flag">4</td>
+                <td class="td-flag">33.3%</td><td class="td-amt">Rp 4,028,000</td><td class="td-flag">11.9×</td>
+              </tr>
+              <tr style="opacity:0.5">
+                <td>Population avg</td><td>433</td><td>—</td><td>—</td><td class="td-ok">2.8%</td><td>—</td><td>1.0×</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> Ketiga user memiliki refund rate 10–12× di atas rata-rata. Chargeback bersamaan dengan refund mengindikasikan double-dipping. Rekomendasikan account freeze dan verifikasi manual setiap transaksi.</div>
+      </div>
+    </div>
+
+    <!-- CASE-006 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-006</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator D — Unusual Amount</div>
+          <div class="case-name">U0019, U0057, U0103, U0144, U0191 · 12–20× Own Average</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM · 20 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Lima pengguna melakukan transaksi transfer yang nilainya 12–20× di atas rata-rata historis mereka sendiri untuk kategori yang sama. Lonjakan ekstrem ini tidak didukung oleh perubahan pola sebelumnya.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>User</th><th>TXN ID</th><th>Category</th><th>Amount</th><th>User Avg (cat)</th><th>Multiple</th><th>Refund</th></tr></thead>
+            <tbody>
+              <tr><td class="td-user">U0103</td><td class="td-txn">T000416</td><td>transfer</td><td class="td-amt">Rp 13,168,790</td><td>Rp 742,000</td><td class="td-flag">17.8×</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-user">U0191</td><td class="td-txn">T000420</td><td>transfer</td><td class="td-amt">Rp 14,723,099</td><td>Rp 820,000</td><td class="td-flag">18.0×</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-user">U0019</td><td class="td-txn">T000411</td><td>transfer</td><td class="td-amt">Rp 7,626,432</td><td>Rp 570,000</td><td class="td-flag">13.4×</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-user">U0057</td><td class="td-txn">T000413</td><td>transfer</td><td class="td-amt">Rp 4,181,651</td><td>Rp 308,000</td><td class="td-flag">13.6×</td><td class="flag-no">—</td></tr>
+              <tr><td class="td-user">U0144</td><td class="td-txn">T000418</td><td>transfer</td><td class="td-amt">Rp 1,918,049</td><td>Rp 159,000</td><td class="td-flag">12.1×</td><td class="flag-no">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding medium"><strong>Finding:</strong> Transaksi tidak disertai refund, namun lonjakan ekstrem tanpa konteks perlu verifikasi. Kemungkinan: legitimate high-value transfer, phishing-induced transfer, atau money mule activity. Rekomendasikan one-time verification contact.</div>
+      </div>
+    </div>
+
+    <!-- CASE-007 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-007</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator E — New Device + High Value</div>
+          <div class="case-name">U0033, U0071, U0118, U0162 · First-Use Device + &gt;p95 Amount</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM · 20 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Empat pengguna melakukan transaksi bernilai sangat tinggi menggunakan device yang baru pertama kali dipakai. Semua transaksi merupakan kategori transfer via bank_transfer. Tiga dari empat transaksi mengajukan refund segera setelah transaksi.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>User</th><th>TXN ID</th><th>Device</th><th>Amount</th><th>p95 Threshold</th><th>Multiple</th><th>Refund</th></tr></thead>
+            <tbody>
+              <tr><td class="td-user">U0033</td><td class="td-txn">T000421</td><td class="td-flag">D0140</td><td class="td-amt">Rp 7,800,000</td><td>Rp 1,127,000</td><td class="td-flag">6.9×</td><td class="flag-yes">YES</td></tr>
+              <tr><td class="td-user">U0118</td><td class="td-txn">T000423</td><td class="td-flag">D0142</td><td class="td-amt">Rp 9,200,000</td><td>Rp 1,127,000</td><td class="td-flag">8.2×</td><td class="flag-yes">YES</td></tr>
+              <tr><td class="td-user">U0162</td><td class="td-txn">T000424</td><td class="td-flag">D0143</td><td class="td-amt">Rp 6,100,000</td><td>Rp 1,127,000</td><td class="td-flag">5.4×</td><td class="flag-yes">YES</td></tr>
+              <tr><td class="td-user">U0071</td><td class="td-txn">T000422</td><td class="td-flag">D0141</td><td class="td-amt">Rp 5,300,000</td><td>Rp 1,127,000</td><td class="td-flag">4.7×</td><td class="flag-yes">YES</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding"><strong>Finding:</strong> Semua 4 transaksi: device baru + amount ekstrem + langsung refund. Combined exposure: <strong>Rp 28,400,000</strong>. Pattern konsisten dengan carding atau account takeover — verifikasi identitas pemilik device baru diperlukan.</div>
+      </div>
+    </div>
+
+    <!-- CASE-008 -->
+    <div class="case-card">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-id">CASE-008</div>
+        <div class="case-title-block">
+          <div class="case-type">Indicator F — Shared Device</div>
+          <div class="case-name">D0150 (4 accounts) &amp; D0151 (5 accounts) · Linked Account Ring</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM · 15 pts</div>
+      </div>
+      <div class="case-body">
+        <p class="case-summary">Dua device digunakan bersama oleh kelompok akun berbeda — D0150 oleh 4 akun dan D0151 oleh 5 akun. Satu device yang digunakan banyak orang mengindikasikan account ring (akun palsu yang dioperasikan dari satu titik) atau device sharing terorganisir untuk menghindari deteksi per-akun.</p>
+        <div class="evidence-table-wrap">
+          <table>
+            <thead><tr><th>Device</th><th>Type</th><th>OS</th><th>Accounts</th><th>Account List</th><th>Total Txn</th><th>Total Amount</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-flag">D0150</td><td>Tablet</td><td>Android</td><td class="td-flag">4</td>
+                <td class="td-user" style="font-size:11px">U0041, U0082, U0133, U0177</td>
+                <td>4</td><td class="td-amt">Rp 438,405</td>
+              </tr>
+              <tr>
+                <td class="td-flag">D0151</td><td>Mobile</td><td>iOS</td><td class="td-flag">5</td>
+                <td class="td-user" style="font-size:11px">U0015, U0066, U0099, U0155, U0188</td>
+                <td>5</td><td class="td-amt">Rp 1,268,582</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="finding medium"><strong>Finding:</strong> Penggunaan shared device oleh banyak akun mengindikasikan potensi synthetic identity fraud atau money mule ring. Rekomendasikan freeze semua akun terkait dan verifikasi KYC ulang.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Risk Register -->
+  <section>
+    <div class="section-label">Section 04</div>
+    <h2>Risk Register — All Flagged Accounts</h2>
+    <p>Tabel berikut merangkum semua akun yang teridentifikasi dengan risk score &gt; 0, diurutkan berdasarkan composite score tertinggi.</p>
+
+    <div class="register-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Risk Level</th>
+            <th>Score</th>
+            <th style="min-width:160px">Score Bar</th>
+            <th>Triggered Indicators</th>
+            <th>Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-user">U0023</td><td><span class="risk-badge high">HIGH</span></td><td class="td-amt">55</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:88%"></div></div></div></td><td>Impossible Travel · Unusual Location</td><td class="td-txn">CASE-001</td></tr>
+          <tr><td class="td-user">U0067</td><td><span class="risk-badge high">HIGH</span></td><td class="td-amt">45</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:72%"></div></div></div></td><td>Impossible Travel · Unusual Location</td><td class="td-txn">CASE-002</td></tr>
+          <tr><td class="td-user">U0112</td><td><span class="risk-badge high">HIGH</span></td><td class="td-amt">55</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:88%"></div></div></div></td><td>Impossible Travel · Unusual Location</td><td class="td-txn">CASE-003</td></tr>
+          <tr><td class="td-user">U0045</td><td><span class="risk-badge high">HIGH</span></td><td class="td-amt">25</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:40%"></div></div></div></td><td>Transaction Burst</td><td class="td-txn">CASE-004</td></tr>
+          <tr><td class="td-user">U0089</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">25</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:40%"></div></div></div></td><td>Transaction Burst</td><td class="td-txn">CASE-004</td></tr>
+          <tr><td class="td-user">U0156</td><td><span class="risk-badge high">HIGH</span></td><td class="td-amt">30</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:48%"></div></div></div></td><td>Refund Abuse</td><td class="td-txn">CASE-005</td></tr>
+          <tr><td class="td-user">U0078</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Refund Abuse</td><td class="td-txn">CASE-005</td></tr>
+          <tr><td class="td-user">U0034</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Refund Abuse</td><td class="td-txn">CASE-005</td></tr>
+          <tr><td class="td-user">U0103</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Unusual Amount</td><td class="td-txn">CASE-006</td></tr>
+          <tr><td class="td-user">U0191</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Unusual Amount</td><td class="td-txn">CASE-006</td></tr>
+          <tr><td class="td-user">U0033</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>New Device + High Value</td><td class="td-txn">CASE-007</td></tr>
+          <tr><td class="td-user">U0118</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="td-amt">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>New Device + High Value</td><td class="td-txn">CASE-007</td></tr>
+          <tr><td class="td-user">U0015</td><td><span class="risk-badge low">LOW</span></td><td class="td-amt">15</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill low" style="width:24%"></div></div></div></td><td>Shared Device</td><td class="td-txn">CASE-008</td></tr>
+          <tr><td class="td-user">U0041</td><td><span class="risk-badge low">LOW</span></td><td class="td-amt">15</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill low" style="width:24%"></div></div></div></td><td>Shared Device</td><td class="td-txn">CASE-008</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- Business Recommendations -->
+  <section>
+    <div class="section-label">Section 05</div>
+    <h2>Business Recommendations</h2>
+
+    <ul class="rec-list">
+      <li class="rec-item">
+        <div class="rec-num">01</div>
+        <div>
+          <div class="rec-title">Immediate Account Freeze — CASE-001, 002, 003 <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Freeze akun U0023, U0067, dan U0112 segera. Ketiga kasus menunjukkan impossible travel yang dikonfirmasi disertai refund langsung. Notifikasi pengguna melalui email/SMS terdaftar untuk verifikasi identitas sebelum akun diaktifkan kembali.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">02</div>
+        <div>
+          <div class="rec-title">Implement Real-Time Velocity Check <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Pasang rate limiter: maksimum 3 transaksi transfer per 10 menit per akun. CASE-004 menunjukkan 6 transaksi dalam 6 menit dapat lolos tanpa trigger apapun. Alert otomatis ke tim fraud jika threshold terlampaui.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">03</div>
+        <div>
+          <div class="rec-title">Geo-Velocity Block Rule <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Blokir otomatis transaksi jika dua lokasi berurutan memiliki travel time yang tidak mungkin (&lt; jarak / 800 km/h). Integrasikan city-distance matrix untuk Indonesia + negara tetangga. Trigger step-up authentication (OTP tambahan) jika jarak &gt; 500 km dalam 2 jam.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">04</div>
+        <div>
+          <div class="rec-title">Refund Rate Monitoring Dashboard <span class="priority-chip high-p">HIGH</span></div>
+          <p class="rec-desc">Bangun monitoring real-time refund rate per user. Threshold otomatis: jika refund rate pengguna melampaui 15% dalam 30 hari → hold refund manual review. CASE-005 menunjukkan 3 pengguna dengan 30%+ refund rate tanpa tindakan.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">05</div>
+        <div>
+          <div class="rec-title">New Device Step-Up Authentication <span class="priority-chip high-p">HIGH</span></div>
+          <p class="rec-desc">Setiap penggunaan device baru untuk transaksi &gt; Rp 1 Juta harus melalui step-up authentication (OTP email + SMS). CASE-007 menunjukkan 4 transaksi Rp 5–9 Juta dari device baru tanpa friction apapun, semuanya langsung direfund.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">06</div>
+        <div>
+          <div class="rec-title">Shared Device KYC Re-verification <span class="priority-chip medium-p">MEDIUM</span></div>
+          <p class="rec-desc">Semua akun yang terhubung ke D0150 dan D0151 (9 akun) harus melalui KYC ulang — upload selfie + ID card. Device yang digunakan &gt; 2 akun aktif harus di-flag secara permanen dan setiap transaksi dari device tersebut mendapat enhanced monitoring.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      Investigation Report — INV-2024-001<br>
+      Digital Crime Investigation Unit · Fintech Platform<br>
+      Data period: 2024-01-01 → 2024-06-30
+    </div>
+    <div class="footer-right">
+      Analyst: Baskara Kresna Juniarto<br>
+      Issued: 2024-07-01 · Version 1.0<br>
+      Classification: Confidential — Internal Use Only
+    </div>
+  </footer>
+</div>
+
+<script>
+  function toggleCase(header) {
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+  }
+
+  // Open the first two cases by default
+  document.querySelectorAll('.case-body')[0].classList.add('open');
+  document.querySelectorAll('.case-body')[3].classList.add('open');
+</script>
