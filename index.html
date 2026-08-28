@@ -5,252 +5,407 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Crime Investigation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
 :root {
-  --bg:          #ECF0F6;
-  --surface:     #FFFFFF;
-  --surface-alt: #F4F6FA;
-  --border:      #CBD5E1;
-  --text:        #0F172A;
-  --text-muted:  #64748B;
-  --text-faint:  #94A3B8;
-  --red:         #BE1F1F;
-  --red-bg:      rgba(190,31,31,0.06);
-  --teal:        #0F766E;
-  --teal-bg:     rgba(15,118,110,0.07);
-  --amber:       #92400E;
-  --amber-bg:    rgba(146,64,14,0.06);
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:          #0D1117;
-    --surface:     #161B22;
-    --surface-alt: #1C2128;
-    --border:      #2D333B;
-    --text:        #CDD9E5;
-    --text-muted:  #768390;
-    --text-faint:  #545D68;
-    --red:         #F87171;
-    --red-bg:      rgba(248,113,113,0.08);
-    --teal:        #2DD4BF;
-    --teal-bg:     rgba(45,212,191,0.08);
-    --amber:       #FCD34D;
-    --amber-bg:    rgba(252,211,77,0.07);
-  }
+  --bg:          #F6F1E9;
+  --surface:     #FDFAF5;
+  --surface-alt: #EDE6D9;
+  --card:        #FFFFFF;
+  --border:      #D9CBBA;
+  --border-s:    #B8A48E;
+  --text:        #1E1208;
+  --text-muted:  #6B5440;
+  --text-faint:  #9C8470;
+  --rust:        #7D3120;
+  --rust-bg:     rgba(125,49,32,0.07);
+  --gold:        #9A6B2A;
+  --gold-bg:     rgba(154,107,42,0.07);
+  --sage:        #4A6B45;
+  --sage-bg:     rgba(74,107,69,0.07);
+  --sh-sm:       0 1px 4px rgba(30,18,8,0.06),0 1px 2px rgba(30,18,8,0.03);
+  --sh-md:       0 6px 20px rgba(30,18,8,0.08),0 2px 6px rgba(30,18,8,0.04);
+  --sh-hv:       0 12px 32px rgba(30,18,8,0.12),0 4px 8px rgba(30,18,8,0.05);
+  --r: 6px;
 }
 
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;-webkit-font-smoothing:antialiased;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;}
 
-/* ── CLASSIF BAR ── */
-.classif-bar{background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-align:center;padding:6px 16px;}
+/* ── CLASSIFICATION BAR ── */
+.classif-bar{background:var(--rust);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;text-align:center;padding:7px 16px;}
 
 /* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:52px;}
-.nav-brand{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--text-muted);letter-spacing:.05em;}
-.nav-brand span{color:var(--red);margin-right:6px;}
+nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;}
+.nav-brand{font-family:'Playfair Display',Georgia,serif;font-size:18px;font-style:italic;color:var(--text);}
+.nav-brand b{color:var(--rust);font-style:normal;font-weight:700;margin-right:4px;}
 .nav-links{display:flex;gap:24px;list-style:none;}
-.nav-links a{font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--text-muted);text-decoration:none;letter-spacing:.05em;transition:color .15s;}
-.nav-links a:hover{color:var(--text);}
-@media(max-width:640px){.nav-links{display:none;}nav{padding:0 16px;}}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color .18s;}
+.nav-links a:hover{color:var(--rust);}
+.nav-links a.gh{color:var(--sage);}
+@media(max-width:780px){.nav-links{display:none;}nav{padding:0 20px;}}
 
 /* ── LAYOUT ── */
-.wrap{max-width:900px;margin:0 auto;padding:0 32px;}
-@media(max-width:640px){.wrap{padding:0 16px;}}
-.section{padding:64px 0;border-top:1px solid var(--border);}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);}
-.section-title{font-family:'DM Serif Display',Georgia,serif;font-size:30px;line-height:1.15;text-wrap:balance;margin-top:8px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 40px;}
+@media(max-width:640px){.wrap{padding:0 20px;}}
+.section{padding:72px 0;}
+.section+.section{border-top:1px solid var(--border);}
+
+/* ── SECTION LABEL ── */
+.sec-label{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.sec-label span{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+h2.sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(26px,4vw,38px);font-weight:600;line-height:1.15;text-wrap:balance;margin-bottom:28px;}
 
 /* ── HERO ── */
-.hero{padding:72px 0 64px;}
-.case-header{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.06em;padding:4px 10px;border:1px solid var(--border);color:var(--text-muted);}
-.badge-teal{border-color:var(--teal);color:var(--teal);background:var(--teal-bg);}
-.hero-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(38px,6vw,66px);line-height:1.05;text-wrap:balance;margin-bottom:6px;}
-.hero-sub{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-muted);letter-spacing:.02em;margin-bottom:28px;}
-.rule{height:1px;background:var(--border);margin:24px 0;}
-.tagline{font-family:'DM Serif Display',Georgia,serif;font-size:19px;font-style:italic;color:var(--text-muted);line-height:1.5;text-wrap:balance;}
-.tagline strong{color:var(--red);font-style:normal;}
-.author-row{display:flex;align-items:flex-start;gap:24px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;}
-.author-name{font-size:14px;font-weight:600;}
-.author-role{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);margin-top:2px;}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;padding:3px 8px;border:1px solid var(--border);background:var(--surface-alt);color:var(--text-muted);}
+.hero{padding:88px 0 72px;position:relative;overflow:hidden;}
+.hero::before{
+  content:'DCI';position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  font-family:'Playfair Display',Georgia,serif;font-size:clamp(160px,24vw,300px);font-weight:700;
+  color:var(--text);opacity:.03;letter-spacing:-.04em;line-height:1;pointer-events:none;user-select:none;
+}
+.hero-kicker{display:flex;align-items:center;gap:10px;margin-bottom:26px;flex-wrap:wrap;}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.07em;padding:4px 13px;border:1px solid var(--border-s);color:var(--text-muted);border-radius:2px;}
+.chip-active{border-color:var(--sage);color:var(--sage);background:var(--sage-bg);}
+h1.hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(50px,8vw,92px);font-weight:700;line-height:.97;letter-spacing:-.02em;text-wrap:balance;margin-bottom:10px;}
+.hero-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);letter-spacing:.04em;margin-bottom:32px;}
+.divider{height:1px;background:var(--border);margin:28px 0;}
+.tagline{font-family:'Playfair Display',Georgia,serif;font-size:21px;font-style:italic;color:var(--text-muted);line-height:1.5;max-width:560px;text-wrap:balance;}
+.tagline strong{color:var(--rust);font-style:normal;}
+.hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;padding:10px 22px;border:1.5px solid var(--sage);color:var(--sage);text-decoration:none;border-radius:3px;transition:background .18s;}
+.btn-outline:hover{background:var(--sage-bg);}
+.author-row{display:flex;align-items:flex-start;gap:24px;margin-top:36px;padding-top:28px;border-top:1px solid var(--border);flex-wrap:wrap;}
+.author-name{font-size:15px;font-weight:600;}
+.author-role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);letter-spacing:.04em;margin-top:3px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.04em;padding:3px 10px;background:var(--surface-alt);border:1px solid var(--border);color:var(--text-muted);border-radius:2px;}
 
-/* ── MISSION ── */
-.business-q{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);padding:18px 22px;margin:24px 0;font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.5;}
-.trigger-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:16px;}
-.trigger-item{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);padding:14px 16px;font-size:13px;color:var(--text-muted);}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:6px;}
-.note{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);padding:14px 18px;margin-top:24px;font-size:13px;color:var(--text-muted);line-height:1.7;}
-.note strong{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px;}
+/* ── CALLOUT & NOTE ── */
+.callout{border-left:3px solid var(--rust);background:var(--card);padding:20px 26px;margin:24px 0;font-family:'Playfair Display',Georgia,serif;font-size:19px;font-style:italic;line-height:1.55;border-radius:0 var(--r) var(--r) 0;box-shadow:var(--sh-sm);}
+.note{border-left:3px solid var(--gold);background:var(--card);padding:14px 20px;margin-top:24px;font-size:13px;color:var(--text-muted);line-height:1.8;border-radius:0 var(--r) var(--r) 0;box-shadow:var(--sh-sm);}
+.note strong{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px;}
 
-/* ── SCOPE GRID ── */
-.quad{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.quad-card{background:var(--surface);padding:22px 18px;}
-.quad-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;font-weight:500;}
-.quad-card ul{list-style:none;display:flex;flex-direction:column;gap:5px;}
-.quad-card li{font-size:12px;color:var(--text-muted);padding-left:14px;position:relative;}
-.quad-card li::before{content:'→';position:absolute;left:0;color:var(--text-faint);font-size:10px;}
+/* ── TRIGGER GRID ── */
+.trigger-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:20px;}
+.trigger-item{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);padding:14px 16px;font-size:13px;color:var(--text-muted);border-radius:var(--r);box-shadow:var(--sh-sm);}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--rust);flex-shrink:0;margin-top:7px;}
+
+/* ── SCOPE ── */
+.quad{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.quad-card{background:var(--card);border:1px solid var(--border);padding:24px 20px;border-radius:var(--r);box-shadow:var(--sh-sm);transition:box-shadow .2s,transform .2s;}
+.quad-card:hover{box-shadow:var(--sh-hv);transform:translateY(-2px);}
+.quad-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px;}
+.quad-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.quad-card li{font-size:12.5px;color:var(--text-muted);padding-left:15px;position:relative;line-height:1.5;}
+.quad-card li::before{content:'→';position:absolute;left:0;color:var(--text-faint);font-size:10px;top:2px;}
 
 /* ── PIPELINE ── */
-.pipe-wrap{display:flex;flex-wrap:wrap;gap:0;margin-top:24px;align-items:center;}
-.pipe-node{background:var(--surface);border:1px solid var(--border);padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);white-space:nowrap;}
-.pipe-node.hi{border-color:var(--teal);color:var(--teal);}
-.pipe-arr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);padding:0 3px;}
-@media(max-width:600px){.pipe-wrap{flex-direction:column;align-items:flex-start;}.pipe-arr{transform:rotate(90deg);padding:3px 12px;}}
+.pipe-scroll{overflow-x:auto;padding-bottom:6px;}
+.pipe-wrap{display:flex;align-items:center;margin-top:28px;min-width:max-content;gap:0;}
+.pipe-node{background:var(--card);border:1px solid var(--border);padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;border-radius:3px;box-shadow:var(--sh-sm);}
+.pipe-node.hi{border-color:var(--gold);color:var(--gold);background:var(--gold-bg);}
+.pipe-arr{font-size:13px;color:var(--text-faint);padding:0 6px;flex-shrink:0;}
 
-/* ── PHASES ACCORDION ── */
-.phases{margin-top:32px;display:flex;flex-direction:column;}
-.phase{border:1px solid var(--border);margin-top:-1px;background:var(--surface);}
-.phase-head{display:grid;grid-template-columns:48px 1fr;cursor:pointer;user-select:none;}
-.phase-num{display:flex;align-items:center;justify-content:center;background:var(--surface-alt);border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);padding:16px;}
-.phase-title-row{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}
-.phase-title-row strong{font-size:14px;font-weight:600;}
-.chevron{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);transition:transform .2s;}
+/* ── PHASES ── */
+.phases{margin-top:32px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);}
+.phase{background:var(--card);border-top:1px solid var(--border);}
+.phase:first-child{border-top:none;}
+.phase-head{display:grid;grid-template-columns:52px 1fr;cursor:pointer;user-select:none;}
+.phase-num{display:flex;align-items:center;justify-content:center;background:var(--surface-alt);border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);padding:18px 0;}
+.phase-title-row{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.phase-title-row strong{font-size:14px;font-weight:600;color:var(--text);}
+.chevron{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-faint);transition:transform .25s ease;flex-shrink:0;}
 .phase.open .chevron{transform:rotate(180deg);}
-.phase-body{display:none;padding:0 18px 18px 66px;font-size:13px;color:var(--text-muted);line-height:1.7;}
-.phase.open .phase-body{display:block;}
-.phase-body ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:4px;}
-.phase-body li{padding-left:14px;position:relative;}
-.phase-body li::before{content:'–';position:absolute;left:0;color:var(--text-faint);}
-.phase-body em{font-style:italic;color:var(--text-faint);font-size:12px;}
+.phase-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.phase.open .phase-body{max-height:600px;}
+.phase-inner{padding:4px 20px 20px 72px;font-size:13px;color:var(--text-muted);line-height:1.8;}
+.phase-inner ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+.phase-inner li{padding-left:16px;position:relative;}
+.phase-inner li::before{content:'–';position:absolute;left:0;color:var(--text-faint);}
+.phase-inner em{font-style:italic;color:var(--text-faint);font-size:12px;}
 
-/* ── ANOMALY INDICATORS ── */
-.ind-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:24px;}
-.ind-card{background:var(--surface);border:1px solid var(--border);padding:18px;position:relative;}
-.ind-letter{position:absolute;top:12px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:500;color:var(--border);}
-.ind-flag{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--red);color:var(--red);background:var(--red-bg);margin-bottom:9px;}
-.ind-name{font-size:14px;font-weight:600;margin-bottom:5px;}
-.ind-desc{font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:10px;}
-.ind-ex{font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.7;color:var(--text-faint);background:var(--surface-alt);border:1px solid var(--border);padding:8px 10px;white-space:pre;}
-.ind-score{margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);}
-.ind-score span{color:var(--red);font-weight:500;margin-left:6px;}
+/* ── ANOMALY ── */
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.ind-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;position:relative;box-shadow:var(--sh-sm);transition:box-shadow .2s,transform .2s;}
+.ind-card:hover{box-shadow:var(--sh-hv);transform:translateY(-2px);}
+.ind-letter{position:absolute;top:14px;right:16px;font-family:'Playfair Display',Georgia,serif;font-size:30px;font-weight:700;font-style:italic;color:var(--border);line-height:1;}
+.ind-flag{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--rust);color:var(--rust);background:var(--rust-bg);border-radius:2px;margin-bottom:12px;}
+.ind-name{font-size:15px;font-weight:600;margin-bottom:6px;}
+.ind-desc{font-size:12.5px;color:var(--text-muted);line-height:1.65;margin-bottom:12px;}
+.ind-ex{font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.75;color:var(--text-faint);background:var(--surface-alt);border:1px solid var(--border);padding:10px 12px;white-space:pre;border-radius:4px;overflow-x:auto;}
+.ind-score{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);}
+.ind-score span{color:var(--rust);font-weight:500;margin-left:6px;}
 
 /* ── RISK SCORING ── */
-.risk-scale{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:24px;}
-.risk-tier{background:var(--surface);padding:20px;text-align:center;}
-.risk-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;margin-bottom:6px;}
-.risk-tier.low .risk-label{color:var(--teal);}
-.risk-tier.med .risk-label{color:var(--amber);}
-.risk-tier.hi2 .risk-label{color:var(--red);}
-.risk-range{font-family:'DM Serif Display',Georgia,serif;font-size:22px;}
-.risk-sub{font-size:11px;color:var(--text-faint);margin-top:3px;}
+.risk-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.risk-tier{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;text-align:center;box-shadow:var(--sh-sm);}
+.risk-tier-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
+.risk-tier.low .risk-tier-label{color:var(--sage);}
+.risk-tier.med .risk-tier-label{color:var(--gold);}
+.risk-tier.hi  .risk-tier-label{color:var(--rust);}
+.risk-tier-range{font-family:'Playfair Display',Georgia,serif;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;}
+.risk-tier-sub{font-size:11px;color:var(--text-faint);margin-top:4px;}
+@media(max-width:480px){.risk-tiers{grid-template-columns:1fr;}}
 
-.score-table{width:100%;border-collapse:collapse;font-size:13px;}
-.score-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;text-align:left;padding:9px 14px;border-bottom:1px solid var(--border);background:var(--surface-alt);}
-.score-table td{padding:9px 14px;border-bottom:1px solid var(--border);}
-.score-table tr:last-child td{border-bottom:none;}
-.score-table td:nth-child(2){font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--red);font-variant-numeric:tabular-nums;}
-.score-table td:nth-child(3){font-size:11px;color:var(--text-faint);}
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh-sm);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--surface-alt);}
+td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-muted);}
+tr:last-child td{border-bottom:none;}
+td.sc{font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--rust);font-variant-numeric:tabular-nums;}
+td.sv{font-size:11px;color:var(--text-faint);}
+tbody tr:hover td{background:var(--surface-alt);}
 
-/* ── CASE FILE ── */
-.case-file{background:var(--surface);border:1px solid var(--border);margin-top:28px;}
-.cf-header{border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+/* ── CASE FILE (example card) ── */
+.case-file{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-top:32px;box-shadow:var(--sh-md);overflow:hidden;}
+.cf-header{border-bottom:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--surface-alt);}
 .cf-id{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;}
-.cf-risk{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;padding:4px 10px;background:var(--red-bg);border:1px solid var(--red);color:var(--red);}
-.cf-meta{padding:14px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;border-bottom:1px solid var(--border);}
-.cf-meta label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:3px;}
-.cf-meta span{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;}
-.cf-flags{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px;}
-.cf-flag{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 10px;border:1px solid var(--red);color:var(--red);background:var(--red-bg);}
-.cf-timeline{padding:14px 18px;}
-.tl-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:14px;}
-.tl-events{padding-left:20px;position:relative;}
-.tl-events::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:var(--border);}
-.tl-ev{position:relative;padding:0 0 14px 16px;}
-.tl-ev::before{content:'';position:absolute;left:-3px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);}
-.tl-ev.sus::before{border-color:var(--red);background:var(--red);}
+.cf-risk{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;padding:5px 12px;background:var(--rust-bg);border:1px solid var(--rust);color:var(--rust);border-radius:2px;}
+.cf-meta{padding:16px 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:16px;border-bottom:1px solid var(--border);}
+.cf-meta label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:4px;}
+.cf-meta span{font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;}
+.cf-flags{padding:14px 20px;display:flex;flex-wrap:wrap;gap:7px;border-bottom:1px solid var(--border);}
+.cf-flag{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 11px;border:1px solid var(--rust);color:var(--rust);background:var(--rust-bg);border-radius:2px;}
+.cf-timeline{padding:16px 20px;}
+.tl-title{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:16px;}
+.tl-events{padding-left:22px;position:relative;}
+.tl-events::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:var(--border);}
+.tl-ev{position:relative;padding:0 0 18px 18px;}
+.tl-ev::before{content:'';position:absolute;left:-4px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--card);border:1.5px solid var(--border);}
+.tl-ev.sus::before{border-color:var(--rust);background:var(--rust);}
 .t-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);margin-bottom:1px;}
-.t-loc{font-size:13px;font-weight:600;}
+.t-loc{font-size:14px;font-weight:600;}
 .t-amt{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted);}
 .t-dev{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);}
-.t-flag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);margin-top:2px;}
+.t-flag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--rust);margin-top:3px;}
 
-/* ── DASHBOARD ── */
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:24px;}
-.dash-page{background:var(--surface);padding:20px;}
-.dash-pg-num{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-faint);letter-spacing:.08em;margin-bottom:7px;}
-.dash-pg-name{font-size:13px;font-weight:600;margin-bottom:11px;}
-.dash-items{display:flex;flex-direction:column;gap:4px;}
-.dash-item{font-size:11px;color:var(--text-muted);padding-left:12px;position:relative;}
-.dash-item::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:8px;top:2px;}
+/* ── KPI TILES (Executive Summary) ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:28px;}
+.kpi-tile{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;box-shadow:var(--sh-sm);}
+.kpi-tile.k-high{border-left:3px solid var(--rust);}
+.kpi-tile.k-med {border-left:3px solid var(--gold);}
+.kpi-tile.k-info{border-left:3px solid var(--sage);}
+.kpi-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+.kpi-value{font-family:'Playfair Display',Georgia,serif;font-size:30px;line-height:1;color:var(--text);margin-bottom:4px;font-variant-numeric:tabular-nums;}
+.kpi-sub{font-size:12px;color:var(--text-faint);}
 
-/* ── TECH STACK ── */
-.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:24px;}
-.tech-group{background:var(--surface);padding:18px;}
-.tech-group-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:11px;}
-.tech-items{display:flex;flex-direction:column;gap:6px;}
-.tech-item{font-size:13px;font-weight:500;}
+/* ── LOSS BOX ── */
+.loss-box{background:var(--rust-bg);border:1px solid rgba(125,49,32,0.2);border-radius:var(--r);padding:20px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin:20px 0;}
+.loss-item-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:6px;}
+.loss-item-value{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--rust);}
+@media(max-width:580px){.loss-box{grid-template-columns:1fr;}}
 
-/* ── OUTCOMES ── */
-.outcomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px;margin-top:22px;}
-.outcome{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--border);padding:12px 14px;font-size:13px;color:var(--text-muted);}
-.oc-check{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);font-weight:500;flex-shrink:0;margin-top:1px;}
+/* ── INVESTIGATION CASE CARDS ── */
+.inv-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:var(--sh-sm);}
+.inv-head{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 20px;cursor:pointer;user-select:none;transition:background .15s;}
+.inv-head:hover{background:var(--surface-alt);}
+.inv-case-id{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--gold);white-space:nowrap;}
+.inv-title-block{min-width:0;}
+.inv-type{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);margin-bottom:2px;}
+.inv-name{font-size:14px;font-weight:500;color:var(--text);}
+.risk-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;padding:4px 10px;border-radius:2px;white-space:nowrap;}
+.risk-badge.high  {background:var(--rust-bg);border:1px solid var(--rust);color:var(--rust);}
+.risk-badge.medium{background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);}
+.risk-badge.low   {background:var(--sage-bg);border:1px solid var(--sage);color:var(--sage);}
+.inv-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.inv-body.open{max-height:2000px;}
+.inv-inner{padding:4px 20px 22px;}
+.inv-summary{font-size:13.5px;color:var(--text-muted);line-height:1.75;margin-bottom:16px;max-width:72ch;}
 
-/* ── INSIGHTS ── */
-.insight-list{display:flex;flex-direction:column;gap:9px;margin-top:22px;}
-.insight{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--teal);padding:13px 17px;font-size:13px;color:var(--text-muted);line-height:1.65;font-style:italic;}
+/* ── EVIDENCE TABLE ── */
+.ev-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:4px;margin-bottom:14px;}
+.ev-table-wrap table th{background:var(--surface-alt);}
+.td-txn{font-family:'IBM Plex Mono',monospace;color:var(--gold);}
+.td-user{font-family:'IBM Plex Mono',monospace;color:var(--gold);}
+.td-amt{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;color:var(--text);}
+.td-flag{font-family:'IBM Plex Mono',monospace;color:var(--rust);}
+.td-city{color:var(--text-muted);}
+.flag-yes{font-family:'IBM Plex Mono',monospace;color:var(--rust);}
+.flag-no{font-family:'IBM Plex Mono',monospace;color:var(--text-faint);}
 
-/* ── FUTURE ── */
-.future-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:24px;}
-.future-ph{background:var(--surface);border:1px solid var(--border);padding:20px;}
-.future-ph.current{border-color:var(--teal);}
-.future-ph-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:7px;}
-.future-ph.current .future-ph-label{color:var(--teal);}
-.future-ph-title{font-size:14px;font-weight:600;margin-bottom:11px;}
-.future-ph-items{display:flex;flex-direction:column;gap:4px;}
-.future-ph-item{font-size:12px;color:var(--text-muted);padding-left:12px;position:relative;}
-.future-ph-item::before{content:'·';position:absolute;left:0;color:var(--text-faint);font-size:16px;line-height:.9;}
+/* ── FINDING CALLOUT ── */
+.finding{border-left:3px solid var(--rust);background:var(--rust-bg);padding:12px 16px;margin:12px 0;font-size:13px;color:var(--text-muted);border-radius:0 4px 4px 0;line-height:1.65;}
+.finding strong{color:var(--rust);}
+.finding.medium{background:var(--gold-bg);border-left-color:var(--gold);}
+.finding.medium strong{color:var(--gold);}
+.finding.info{background:var(--sage-bg);border-left-color:var(--sage);}
+.finding.info strong{color:var(--sage);}
+
+/* ── TIMELINE (case) ── */
+.case-timeline{position:relative;padding-left:26px;margin:14px 0;}
+.case-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:var(--border);}
+.ct-event{position:relative;margin-bottom:14px;font-size:13px;}
+.ct-event::before{content:'';position:absolute;left:-23px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--card);border:1.5px solid var(--border);}
+.ct-event.alert::before{background:var(--rust);border-color:var(--rust);}
+.ct-event.warn::before{background:var(--gold);border-color:var(--gold);}
+.ct-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);margin-bottom:1px;}
+.ct-desc{color:var(--text-muted);}
+.ct-amount{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);margin-left:6px;}
+.ct-city{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);margin-left:6px;}
+
+/* ── SECTION H3 ── */
+.inv-inner h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin:18px 0 10px;}
+
+/* ── SCORE BAR ── */
+.score-bar-wrap{display:flex;align-items:center;gap:8px;}
+.score-bar{height:5px;border-radius:3px;background:var(--surface-alt);width:80px;overflow:hidden;flex-shrink:0;}
+.score-fill{height:100%;border-radius:3px;}
+.score-fill.high  {background:var(--rust);}
+.score-fill.medium{background:var(--gold);}
+.score-fill.low   {background:var(--sage);}
+
+/* ── RECOMMENDATIONS ── */
+.rec-list{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+.rec-item{display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh-sm);}
+.rec-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);font-weight:500;padding-top:2px;}
+.rec-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.rec-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin:0;}
+.priority-chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;padding:2px 8px;border-radius:2px;margin-left:8px;vertical-align:middle;}
+.priority-chip.urgent {background:var(--rust-bg);border:1px solid var(--rust);color:var(--rust);}
+.priority-chip.high-p {background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);}
+.priority-chip.medium-p{background:var(--sage-bg);border:1px solid var(--sage);color:var(--sage);}
+
+/* ── DASHBOARD TABS ── */
+.dash-spec-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;margin-top:28px;}
+.ds-tab{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;cursor:pointer;color:var(--text-faint);border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;user-select:none;}
+.ds-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.ds-tab:hover:not(.active){color:var(--text-muted);}
+.ds-panel{display:none;padding:32px 0;}
+.ds-panel.active{display:block;}
+.ds-panel h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin:26px 0 12px;}
+.ds-panel p{font-size:13.5px;color:var(--text-muted);line-height:1.75;margin-bottom:14px;max-width:72ch;}
+
+/* ── KPI MOCK (dashboard spec) ── */
+.kpi-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.kpi-mock{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;min-width:140px;flex:1;box-shadow:var(--sh-sm);}
+.kpi-mock-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+.kpi-mock-val{font-family:'Playfair Display',Georgia,serif;font-size:24px;line-height:1;color:var(--text);margin-bottom:4px;}
+.kpi-mock-sub{font-size:11px;color:var(--text-faint);}
+.kpi-mock.a-high{border-top:2px solid var(--rust);}
+.kpi-mock.a-med {border-top:2px solid var(--gold);}
+.kpi-mock.a-low {border-top:2px solid var(--sage);}
+.kpi-mock.a-info{border-top:2px solid var(--gold);}
+
+/* ── VISUAL BLUEPRINT ── */
+.bp-grid{display:grid;gap:10px;margin-bottom:20px;}
+.bp-grid.cols-2{grid-template-columns:1fr 1fr;}
+.bp-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.bp-grid.cols-12{grid-template-columns:1fr 2fr;}
+.visual-block{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;min-height:110px;display:flex;flex-direction:column;gap:7px;box-shadow:var(--sh-sm);}
+.vb-type{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;}
+.vb-title{font-size:13px;font-weight:600;color:var(--text);}
+.vb-desc{font-size:12px;color:var(--text-faint);line-height:1.5;flex:1;}
+.vb-fields{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.field-chip{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;background:var(--gold-bg);color:var(--gold);border-radius:2px;border:1px solid rgba(154,107,42,0.25);}
+@media(max-width:640px){.bp-grid.cols-2,.bp-grid.cols-3,.bp-grid.cols-12{grid-template-columns:1fr;}}
+
+/* ── FILTER CARDS ── */
+.filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px;margin-bottom:18px;}
+.filter-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:12px 14px;box-shadow:var(--sh-sm);}
+.filter-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;color:var(--text-faint);text-transform:uppercase;margin-bottom:5px;}
+.filter-type{font-size:12.5px;color:var(--text-muted);}
+.filter-field{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);margin-top:3px;}
+
+/* ── DAX BLOCKS ── */
+.dax-block{background:#F0E8DC;border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;}
+.dax-name{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--rust);margin-bottom:6px;font-weight:500;}
+.dax-code{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--text-muted);line-height:1.65;white-space:pre;overflow-x:auto;}
+.dax-comment{color:var(--text-faint);}
+.dax-func   {color:var(--rust);}
+.dax-string {color:var(--sage);}
+.dax-num    {color:var(--gold);}
+
+/* ── DATA MODEL ── */
+.model-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;overflow-x:auto;box-shadow:var(--sh-sm);}
+.model-grid{display:grid;grid-template-columns:repeat(4,200px);gap:14px;min-width:860px;}
+.model-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.model-table-header{background:var(--surface-alt);padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--gold);border-bottom:1px solid var(--border);}
+.model-table-row{padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);border-bottom:1px solid rgba(217,203,186,0.4);display:flex;justify-content:space-between;align-items:center;}
+.model-table-row:last-child{border-bottom:none;}
+.model-table-row.pk{color:var(--rust);}
+.model-table-row.fk{color:var(--gold);}
+.col-type{font-size:9px;color:var(--text-faint);opacity:.7;}
+
+/* ── SPEC CALLOUT ── */
+.spec-note{border-left:3px solid var(--gold);background:var(--gold-bg);padding:12px 16px;margin:14px 0;font-size:13px;color:var(--text-muted);border-radius:0 4px 4px 0;}
+.spec-note strong{color:var(--gold);}
+
+/* ── DASHBOARD OVERVIEW CARDS ── */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:28px;}
+.dash-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 18px;box-shadow:var(--sh-sm);transition:box-shadow .2s,transform .2s;}
+.dash-card:hover{box-shadow:var(--sh-hv);transform:translateY(-2px);}
+.dash-pg-num{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-faint);letter-spacing:.08em;margin-bottom:5px;}
+.dash-pg-name{font-size:14px;font-weight:600;margin-bottom:14px;}
+.dash-items{display:flex;flex-direction:column;gap:5px;}
+.dash-item{font-size:12px;color:var(--text-muted);padding-left:14px;position:relative;line-height:1.5;}
+.dash-item::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:8px;top:3px;}
+
+/* ── TECH / OUTCOMES / FUTURE ── */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin-top:28px;}
+.tech-group{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;box-shadow:var(--sh-sm);}
+.tech-group-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:12px;}
+.tech-items{display:flex;flex-direction:column;gap:7px;}
+.tech-item{font-size:14px;font-weight:600;}
+.outcomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:24px;}
+.outcome{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--border);padding:13px 16px;font-size:13px;color:var(--text-muted);border-radius:var(--r);box-shadow:var(--sh-sm);}
+.oc-check{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--sage);font-weight:600;flex-shrink:0;margin-top:1px;}
+.insight-list{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+.insight{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--sage);padding:14px 18px;font-size:13px;font-style:italic;color:var(--text-muted);line-height:1.75;border-radius:0 var(--r) var(--r) 0;box-shadow:var(--sh-sm);}
+.future-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:28px;}
+.future-ph{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 18px;box-shadow:var(--sh-sm);}
+.future-ph.current{border-color:var(--gold);border-top:3px solid var(--gold);}
+.future-ph-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-bottom:7px;}
+.future-ph.current .future-ph-label{color:var(--gold);}
+.future-ph-title{font-size:15px;font-weight:600;margin-bottom:12px;}
+.future-ph-items{display:flex;flex-direction:column;gap:5px;}
+.future-ph-item{font-size:12.5px;color:var(--text-muted);padding-left:14px;position:relative;line-height:1.5;}
+.future-ph-item::before{content:'·';position:absolute;left:1px;color:var(--text-faint);font-size:18px;line-height:.85;}
 
 /* ── FOOTER ── */
-.footer-wrap{border-top:1px solid var(--border);}
-.footer{padding:48px 0;}
-.footer-tagline{font-family:'DM Serif Display',Georgia,serif;font-size:21px;font-style:italic;color:var(--text-muted);margin-bottom:14px;}
-.footer-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);display:flex;gap:20px;flex-wrap:wrap;}
+.footer-wrap{border-top:1px solid var(--border);background:var(--surface);}
+.footer{padding:52px 0;}
+.footer-tagline{font-family:'Playfair Display',Georgia,serif;font-size:26px;font-style:italic;color:var(--text-muted);margin-bottom:22px;line-height:1.4;}
+.footer-meta{display:flex;gap:24px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-faint);letter-spacing:.04em;}
+.footer-meta a{color:var(--sage);text-decoration:none;}
+.footer-meta a:hover{opacity:.75;}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
 <body>
 
-<!-- CLASSIFICATION BAR -->
-<div class="classif-bar">CONFIDENTIAL · INTERNAL INVESTIGATION · FOR AUTHORIZED REVIEW ONLY</div>
+<div class="classif-bar">CONFIDENTIAL · INTERNAL INVESTIGATION · AUTHORIZED REVIEW ONLY</div>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-brand"><span>▶</span>DCI-2024-001</div>
+  <div class="nav-brand"><b>▶</b> Digital Crime Investigation</div>
   <ul class="nav-links">
     <li><a href="#mission">Mission</a></li>
-    <li><a href="#methodology">Methodology</a></li>
+    <li><a href="#methodology">Method</a></li>
     <li><a href="#anomaly">Anomaly</a></li>
     <li><a href="#risk">Risk Score</a></li>
-    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#spec">Dashboard Spec</a></li>
     <li><a href="#outcome">Outcome</a></li>
-    <li><a href="https://github.com/basxntana/digital-crime-investigation" target="_blank" style="color:var(--teal);">GitHub ↗</a></li>
+    <li><a href="https://github.com/basxntana/digital-crime-investigation" target="_blank" class="gh">GitHub ↗</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="wrap">
   <div class="hero">
-    <div class="case-header">
-      <span class="badge">CASE #DCI-2024-001</span>
-      <span class="badge badge-teal">● Active Investigation</span>
+    <div class="hero-kicker">
+      <span class="chip">CASE #DCI-2024-001</span>
+      <span class="chip chip-active">● Active Investigation</span>
     </div>
     <h1 class="hero-title">Digital Crime<br>Investigation</h1>
     <p class="hero-sub">Transaction Fraud &amp; Anomaly Analytics — Fintech Portfolio Project</p>
-    <div class="rule"></div>
+    <div class="divider"></div>
     <p class="tagline">"Follow the data. <strong>Find the pattern.</strong> Investigate the anomaly."</p>
-    <div style="margin:20px 0;">
-      <a href="https://github.com/basxntana/digital-crime-investigation" target="_blank"
-         style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.05em;padding:9px 18px;border:1px solid var(--teal);color:var(--teal);text-decoration:none;transition:background .15s;"
-         onmouseover="this.style.background='var(--teal-bg)'" onmouseout="this.style.background='transparent'">
-        ⎇ View on GitHub
-      </a>
+    <div class="hero-cta">
+      <a href="https://github.com/basxntana/digital-crime-investigation" target="_blank" class="btn-outline">⎇ View on GitHub</a>
     </div>
     <div class="author-row">
       <div>
@@ -268,16 +423,15 @@ nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1p
   </div>
 </div>
 
-<!-- MISSION -->
 <div class="wrap">
   <section class="section" id="mission">
-    <div class="eyebrow">01 · Mission Brief</div>
-    <h2 class="section-title">Investigasi Financial Leakage pada Sistem Transaksi Fintech</h2>
-    <p style="color:var(--text-muted);font-size:14px;line-height:1.8;max-width:660px;margin-top:16px;">
+    <div class="sec-label"><span>Mission Brief</span></div>
+    <h2 class="sec-title">Investigasi Financial Leakage<br>pada Sistem Transaksi Fintech</h2>
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.9;max-width:620px;">
       Sebuah perusahaan fintech menemukan indikasi financial leakage. Revenue terlihat normal, namun tim Finance menemukan anomali yang memerlukan investigasi mendalam dari seorang Data Analyst.
     </p>
-    <div class="business-q">"What happened to the company's money, and which transaction patterns should be investigated?"</div>
-    <div class="eyebrow" style="margin-bottom:12px;">Trigger Indicators</div>
+    <div class="callout">"What happened to the company's money, and which transaction patterns should be investigated?"</div>
+    <div class="sec-label" style="margin-top:6px;"><span>Trigger Indicators</span></div>
     <div class="trigger-grid">
       <div class="trigger-item"><div class="dot"></div>Jumlah refund meningkat signifikan</div>
       <div class="trigger-item"><div class="dot"></div>Beberapa transaksi bernilai sangat besar</div>
@@ -292,12 +446,11 @@ nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1p
   </section>
 </div>
 
-<!-- SCOPE -->
 <div class="wrap">
   <section class="section" id="scope">
-    <div class="eyebrow">02 · Investigation Scope</div>
-    <h2 class="section-title">Empat Domain Investigasi</h2>
-    <div class="quad" style="margin-top:24px;">
+    <div class="sec-label"><span>Investigation Scope</span></div>
+    <h2 class="sec-title">Empat Domain Investigasi</h2>
+    <div class="quad">
       <div class="quad-card">
         <div class="quad-label">Transaction</div>
         <ul>
@@ -338,132 +491,144 @@ nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1p
   </section>
 </div>
 
-<!-- METHODOLOGY -->
 <div class="wrap">
   <section class="section" id="methodology">
-    <div class="eyebrow">03 · Methodology</div>
-    <h2 class="section-title">Data Analytics Pipeline</h2>
-    <div class="pipe-wrap">
-      <div class="pipe-node">Raw Dataset</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Data Understanding</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Data Cleaning</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Validation</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Integration</div><div class="pipe-arr">→</div>
-      <div class="pipe-node hi">EDA</div><div class="pipe-arr">→</div>
-      <div class="pipe-node hi">Behavior Analysis</div><div class="pipe-arr">→</div>
-      <div class="pipe-node hi">Anomaly Detection</div><div class="pipe-arr">→</div>
-      <div class="pipe-node hi">Risk Scoring</div><div class="pipe-arr">→</div>
-      <div class="pipe-node hi">Investigation Cases</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Dashboard</div><div class="pipe-arr">→</div>
-      <div class="pipe-node">Recommendations</div>
+    <div class="sec-label"><span>Methodology</span></div>
+    <h2 class="sec-title">Data Analytics Pipeline</h2>
+    <div class="pipe-scroll">
+      <div class="pipe-wrap">
+        <div class="pipe-node">Raw Dataset</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Data Understanding</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Data Cleaning</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Validation</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Integration</div><div class="pipe-arr">→</div>
+        <div class="pipe-node hi">EDA</div><div class="pipe-arr">→</div>
+        <div class="pipe-node hi">Behavior Analysis</div><div class="pipe-arr">→</div>
+        <div class="pipe-node hi">Anomaly Detection</div><div class="pipe-arr">→</div>
+        <div class="pipe-node hi">Risk Scoring</div><div class="pipe-arr">→</div>
+        <div class="pipe-node hi">Investigation Cases</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Dashboard</div><div class="pipe-arr">→</div>
+        <div class="pipe-node">Recommendations</div>
+      </div>
     </div>
-    <div class="phases">
+    <div class="phases" style="margin-top:36px;">
       <div class="phase open">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">01</div>
           <div class="phase-title-row"><strong>Data Understanding</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          Memahami struktur dataset sebelum analisis dimulai.
-          <ul>
-            <li>Jumlah baris, kolom, dan tipe data</li>
-            <li>Missing values &amp; duplicate detection</li>
-            <li>Unique values &amp; range nominal</li>
-            <li>Distribusi transaksi &amp; periode waktu</li>
-            <li>Jumlah user, merchant, device</li>
-          </ul>
-          <br><em>Output: Data profiling report</em>
+          <div class="phase-inner">
+            Memahami struktur dataset sebelum analisis dimulai.
+            <ul>
+              <li>Jumlah baris, kolom, dan tipe data</li>
+              <li>Missing values &amp; duplicate detection</li>
+              <li>Unique values &amp; range nominal</li>
+              <li>Distribusi transaksi &amp; periode waktu</li>
+              <li>Jumlah user, merchant, device</li>
+            </ul>
+            <br><em>Output: Data profiling report</em>
+          </div>
         </div>
       </div>
       <div class="phase">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">02</div>
           <div class="phase-title-row"><strong>Data Cleaning &amp; Validation</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          Memastikan data bersih dan valid sebelum analisis.
-          <ul>
-            <li>Handling missing values</li>
-            <li>Duplicate removal</li>
-            <li>Format timestamp correction</li>
-            <li>Amount validation (valid range, non-negative)</li>
-            <li>Standarisasi location, user ID, device ID, status</li>
-          </ul>
-          <br><em>Output: Clean dataset siap analisis</em>
+          <div class="phase-inner">
+            Memastikan data bersih dan valid sebelum analisis.
+            <ul>
+              <li>Handling missing values</li>
+              <li>Duplicate removal</li>
+              <li>Format timestamp correction</li>
+              <li>Amount validation (valid range, non-negative)</li>
+              <li>Standarisasi location, user ID, device ID, status</li>
+            </ul>
+            <br><em>Output: Clean dataset siap analisis</em>
+          </div>
         </div>
       </div>
       <div class="phase">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">03</div>
           <div class="phase-title-row"><strong>Exploratory Data Analysis</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          Memahami baseline normal sebelum mencari anomali.
-          <ul>
-            <li>Transaction distribution &amp; central tendency</li>
-            <li>Frequency by hour, day, location</li>
-            <li>Breakdown by payment method &amp; category</li>
-            <li>Refund distribution analysis</li>
-          </ul>
-          <br><em>"Anomali hanya bisa diidentifikasi setelah baseline normal dipahami."</em>
+          <div class="phase-inner">
+            Memahami baseline normal sebelum mencari anomali.
+            <ul>
+              <li>Transaction distribution &amp; central tendency</li>
+              <li>Frequency by hour, day, location</li>
+              <li>Breakdown by payment method &amp; category</li>
+              <li>Refund distribution analysis</li>
+            </ul>
+            <br><em>"Anomali hanya bisa diidentifikasi setelah baseline normal dipahami."</em>
+          </div>
         </div>
       </div>
       <div class="phase">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">04</div>
           <div class="phase-title-row"><strong>Anomaly Investigation</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          Identifikasi tujuh indikator suspicious activity berdasarkan deviation dari baseline.
-          <ul>
-            <li>Unusual Amount, Unusual Location</li>
-            <li>Impossible Travel, New Device</li>
-            <li>Transaction Burst, Refund Abuse</li>
-            <li>Shared Device detection</li>
-          </ul>
+          <div class="phase-inner">
+            Identifikasi tujuh indikator suspicious activity berdasarkan deviation dari baseline.
+            <ul>
+              <li>Unusual Amount, Unusual Location</li>
+              <li>Impossible Travel, New Device</li>
+              <li>Transaction Burst, Refund Abuse</li>
+              <li>Shared Device detection</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="phase">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">05</div>
           <div class="phase-title-row"><strong>Risk Scoring</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          Setiap indikator diberi bobot skor untuk memprioritaskan investigasi manual.
-          <ul>
-            <li>Impossible Travel: +40 pts (highest severity)</li>
-            <li>Unusual Location / Excessive Refund: +25 pts</li>
-            <li>Unusual Amount / Burst / Shared Device: +20 pts</li>
-            <li>New Device: +15 pts</li>
-          </ul>
-          <br><em>Klasifikasi: LOW (0–30) · MEDIUM (31–60) · HIGH (61+)</em>
+          <div class="phase-inner">
+            Setiap indikator diberi bobot skor untuk memprioritaskan investigasi manual.
+            <ul>
+              <li>Impossible Travel: +40 pts (highest severity)</li>
+              <li>Unusual Location / Excessive Refund: +25 pts</li>
+              <li>Unusual Amount / Burst / Shared Device: +20 pts</li>
+              <li>New Device: +15 pts</li>
+            </ul>
+            <br><em>Klasifikasi: LOW (0–30) · MEDIUM (31–60) · HIGH (61+)</em>
+          </div>
         </div>
       </div>
       <div class="phase">
-        <div class="phase-head" onclick="toggle(this)">
+        <div class="phase-head" onclick="togglePhase(this)">
           <div class="phase-num">06</div>
           <div class="phase-title-row"><strong>Investigation Case &amp; Recommendations</strong><span class="chevron">▾</span></div>
         </div>
         <div class="phase-body">
-          High-risk accounts dikelompokkan menjadi investigation case dengan timeline lengkap.
-          <ul>
-            <li>Case summary dengan risk score &amp; flags</li>
-            <li>Transaction timeline per case</li>
-            <li>Related devices &amp; locations</li>
-            <li>Financial impact estimation</li>
-            <li>Actionable business recommendations</li>
-          </ul>
+          <div class="phase-inner">
+            High-risk accounts dikelompokkan menjadi investigation case dengan timeline lengkap.
+            <ul>
+              <li>Case summary dengan risk score &amp; flags</li>
+              <li>Transaction timeline per case</li>
+              <li>Related devices &amp; locations</li>
+              <li>Financial impact estimation</li>
+              <li>Actionable business recommendations</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </div>
 
-<!-- ANOMALY INDICATORS -->
 <div class="wrap">
   <section class="section" id="anomaly">
-    <div class="eyebrow">04 · Anomaly Indicators</div>
-    <h2 class="section-title">Tujuh Indikator Suspicious Activity</h2>
+    <div class="sec-label"><span>Anomaly Indicators</span></div>
+    <h2 class="sec-title">Tujuh Indikator Suspicious Activity</h2>
     <div class="ind-grid">
       <div class="ind-card">
         <span class="ind-letter">A</span>
@@ -537,95 +702,89 @@ Average:  2 refunds / 100 txn</div>
   </section>
 </div>
 
-<!-- RISK SCORING -->
 <div class="wrap">
   <section class="section" id="risk">
-    <div class="eyebrow">05 · Risk Scoring System</div>
-    <h2 class="section-title">Prioritisasi Investigasi Berbasis Skor</h2>
-    <div class="risk-scale" style="margin-top:24px;">
+    <div class="sec-label"><span>Risk Scoring System</span></div>
+    <h2 class="sec-title">Prioritisasi Investigasi Berbasis Skor</h2>
+    <div class="risk-tiers">
       <div class="risk-tier low">
-        <div class="risk-label">LOW RISK</div>
-        <div class="risk-range">0 – 30</div>
-        <div class="risk-sub">Monitor saja</div>
+        <div class="risk-tier-label">Low Risk</div>
+        <div class="risk-tier-range">0 – 30</div>
+        <div class="risk-tier-sub">Monitor saja</div>
       </div>
       <div class="risk-tier med">
-        <div class="risk-label">MEDIUM RISK</div>
-        <div class="risk-range">31 – 60</div>
-        <div class="risk-sub">Review terjadwal</div>
+        <div class="risk-tier-label">Medium Risk</div>
+        <div class="risk-tier-range">31 – 60</div>
+        <div class="risk-tier-sub">Review terjadwal</div>
       </div>
-      <div class="risk-tier hi2">
-        <div class="risk-label">HIGH RISK</div>
-        <div class="risk-range">61 – 100+</div>
-        <div class="risk-sub">Manual investigation</div>
+      <div class="risk-tier hi">
+        <div class="risk-tier-label">High Risk</div>
+        <div class="risk-tier-range">61 – 100+</div>
+        <div class="risk-tier-sub">Manual investigation</div>
       </div>
     </div>
-    <div style="overflow-x:auto;border:1px solid var(--border);">
-      <table class="score-table">
-        <thead>
-          <tr><th>Indicator</th><th>Score</th><th>Severity</th></tr>
-        </thead>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicator</th><th>Score</th><th>Severity</th></tr></thead>
         <tbody>
-          <tr><td>Impossible Travel</td><td>+40</td><td>Critical</td></tr>
-          <tr><td>Unusual Location</td><td>+25</td><td>High</td></tr>
-          <tr><td>Excessive Refund</td><td>+25</td><td>High</td></tr>
-          <tr><td>Unusual Amount</td><td>+20</td><td>Medium</td></tr>
-          <tr><td>Transaction Burst</td><td>+20</td><td>Medium</td></tr>
-          <tr><td>Shared Device</td><td>+20</td><td>Medium</td></tr>
-          <tr><td>New Device</td><td>+15</td><td>Low-Medium</td></tr>
+          <tr><td>Impossible Travel</td><td class="sc">+40</td><td class="sv">Critical</td></tr>
+          <tr><td>Unusual Location</td><td class="sc">+25</td><td class="sv">High</td></tr>
+          <tr><td>Excessive Refund</td><td class="sc">+25</td><td class="sv">High</td></tr>
+          <tr><td>Unusual Amount</td><td class="sc">+20</td><td class="sv">Medium</td></tr>
+          <tr><td>Transaction Burst</td><td class="sc">+20</td><td class="sv">Medium</td></tr>
+          <tr><td>Shared Device</td><td class="sc">+20</td><td class="sv">Medium</td></tr>
+          <tr><td>New Device</td><td class="sc">+15</td><td class="sv">Low-Medium</td></tr>
         </tbody>
       </table>
     </div>
-
-    <div style="margin-top:32px;">
-      <div class="eyebrow" style="margin-bottom:14px;">Contoh Investigation Case</div>
-      <div class="case-file">
-        <div class="cf-header">
-          <div class="cf-id">CASE #INV-00421 · User: U01</div>
-          <div class="cf-risk">HIGH RISK · 87/100</div>
-        </div>
-        <div class="cf-meta">
-          <div><label>Suspicious Txn</label><span>8</span></div>
-          <div><label>Devices Used</label><span>4</span></div>
-          <div><label>Unusual Locations</label><span>3</span></div>
-          <div><label>Refund Requests</label><span>12</span></div>
-        </div>
-        <div class="cf-flags">
-          <span class="cf-flag">✓ Impossible Travel</span>
-          <span class="cf-flag">✓ Unusual Amount</span>
-          <span class="cf-flag">✓ New Device</span>
-          <span class="cf-flag">✓ Unusual Location</span>
-          <span class="cf-flag">✓ Refund Abuse</span>
-        </div>
-        <div class="cf-timeline">
-          <div class="tl-title">Investigation Timeline</div>
-          <div class="tl-events">
-            <div class="tl-ev">
-              <div class="t-time">10:03</div>
-              <div class="t-loc">Jakarta</div>
-              <div class="t-amt">Rp 120.000</div>
-              <div class="t-dev">Device D01</div>
-            </div>
-            <div class="tl-ev sus">
-              <div class="t-time">10:17</div>
-              <div class="t-loc">Singapore</div>
-              <div class="t-amt">Rp 8.500.000</div>
-              <div class="t-dev">Device D99 (NEW)</div>
-              <div class="t-flag">⚑ Impossible Travel + New Device + Unusual Amount</div>
-            </div>
-            <div class="tl-ev sus">
-              <div class="t-time">10:20</div>
-              <div class="t-loc">Singapore</div>
-              <div class="t-amt">Rp 4.200.000</div>
-              <div class="t-dev">Device D99</div>
-              <div class="t-flag">⚑ Consecutive high-value transaction</div>
-            </div>
-            <div class="tl-ev sus">
-              <div class="t-time">10:42</div>
-              <div class="t-loc">—</div>
-              <div class="t-amt">Rp 4.200.000</div>
-              <div class="t-dev">Refund Request</div>
-              <div class="t-flag">⚑ Refund setelah transaksi mencurigakan</div>
-            </div>
+    <div class="sec-label" style="margin-top:40px;"><span>Contoh Investigation Case</span></div>
+    <div class="case-file">
+      <div class="cf-header">
+        <div class="cf-id">CASE #INV-00421 · User: U01</div>
+        <div class="cf-risk">HIGH RISK · 87/100</div>
+      </div>
+      <div class="cf-meta">
+        <div><label>Suspicious Txn</label><span>8</span></div>
+        <div><label>Devices Used</label><span>4</span></div>
+        <div><label>Unusual Locations</label><span>3</span></div>
+        <div><label>Refund Requests</label><span>12</span></div>
+      </div>
+      <div class="cf-flags">
+        <span class="cf-flag">✓ Impossible Travel</span>
+        <span class="cf-flag">✓ Unusual Amount</span>
+        <span class="cf-flag">✓ New Device</span>
+        <span class="cf-flag">✓ Unusual Location</span>
+        <span class="cf-flag">✓ Refund Abuse</span>
+      </div>
+      <div class="cf-timeline">
+        <div class="tl-title">Investigation Timeline</div>
+        <div class="tl-events">
+          <div class="tl-ev">
+            <div class="t-time">10:03</div>
+            <div class="t-loc">Jakarta</div>
+            <div class="t-amt">Rp 120.000</div>
+            <div class="t-dev">Device D01</div>
+          </div>
+          <div class="tl-ev sus">
+            <div class="t-time">10:17</div>
+            <div class="t-loc">Singapore</div>
+            <div class="t-amt">Rp 8.500.000</div>
+            <div class="t-dev">Device D99 (NEW)</div>
+            <div class="t-flag">⚑ Impossible Travel + New Device + Unusual Amount</div>
+          </div>
+          <div class="tl-ev sus">
+            <div class="t-time">10:20</div>
+            <div class="t-loc">Singapore</div>
+            <div class="t-amt">Rp 4.200.000</div>
+            <div class="t-dev">Device D99</div>
+            <div class="t-flag">⚑ Consecutive high-value transaction</div>
+          </div>
+          <div class="tl-ev sus">
+            <div class="t-time">10:42</div>
+            <div class="t-loc">—</div>
+            <div class="t-amt">Rp 4.200.000</div>
+            <div class="t-dev">Refund Request</div>
+            <div class="t-flag">&#9873; Refund setelah transaksi mencurigakan</div>
           </div>
         </div>
       </div>
@@ -633,86 +792,662 @@ Average:  2 refunds / 100 txn</div>
   </section>
 </div>
 
-<!-- DASHBOARD -->
+<!-- INVESTIGATION CASES -->
 <div class="wrap">
-  <section class="section" id="dashboard">
-    <div class="eyebrow">06 · Dashboard Design</div>
-    <h2 class="section-title">Power BI Investigation Dashboard</h2>
-    <p style="color:var(--text-muted);font-size:14px;margin-top:12px;">Dashboard terbagi menjadi empat halaman investigasi yang terstruktur, dari executive overview hingga case-level analysis.</p>
-    <div class="dash-grid">
-      <div class="dash-page">
-        <div class="dash-pg-num">PAGE 01</div>
-        <div class="dash-pg-name">Investigation Overview</div>
-        <div class="dash-items">
-          <div class="dash-item">KPI: Total Transactions</div>
-          <div class="dash-item">KPI: Suspicious Transactions</div>
-          <div class="dash-item">KPI: High Risk Count</div>
-          <div class="dash-item">KPI: Potential Loss</div>
-          <div class="dash-item">Transaction trend chart</div>
-          <div class="dash-item">Risk distribution</div>
-        </div>
+  <section class="section" id="cases">
+    <div class="sec-label"><span>Investigation Report</span></div>
+    <h2 class="sec-title">Executive Summary &amp;<br>Investigation Cases</h2>
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.9;max-width:640px;">
+      Investigasi mencakup 433 transaksi dari 200 pengguna aktif selama Januari-Juni 2024. Ditemukan 8 kasus mencurigakan yang melibatkan 28 akun unik.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi-tile k-high">
+        <div class="kpi-label">Total Flagged Cases</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-sub">Across 7 anomaly indicators</div>
       </div>
-      <div class="dash-page">
-        <div class="dash-pg-num">PAGE 02</div>
-        <div class="dash-pg-name">Transaction Intelligence</div>
-        <div class="dash-items">
-          <div class="dash-item">Amount distribution</div>
-          <div class="dash-item">Transactions by hour</div>
-          <div class="dash-item">Transactions by location</div>
-          <div class="dash-item">Transactions by payment method</div>
-          <div class="dash-item">Transaction frequency</div>
-        </div>
+      <div class="kpi-tile k-high">
+        <div class="kpi-label">Accounts Under Review</div>
+        <div class="kpi-value">28</div>
+        <div class="kpi-sub">14% of active user base</div>
       </div>
-      <div class="dash-page">
-        <div class="dash-pg-num">PAGE 03</div>
-        <div class="dash-pg-name">Suspicious Activity</div>
-        <div class="dash-items">
-          <div class="dash-item">Top suspicious users</div>
-          <div class="dash-item">Suspicious devices</div>
-          <div class="dash-item">Suspicious locations</div>
-          <div class="dash-item">Refund abuse analysis</div>
-          <div class="dash-item">Transaction bursts</div>
-        </div>
+      <div class="kpi-tile k-high">
+        <div class="kpi-label">Potential Loss Exposure</div>
+        <div class="kpi-value" style="font-size:22px">Rp 87.2M</div>
+        <div class="kpi-sub">Refunded high-risk transactions</div>
       </div>
-      <div class="dash-page">
-        <div class="dash-pg-num">PAGE 04</div>
-        <div class="dash-pg-name">Investigation Case</div>
-        <div class="dash-items">
-          <div class="dash-item">Case selector (by ID)</div>
-          <div class="dash-item">User profile</div>
-          <div class="dash-item">Transaction timeline</div>
-          <div class="dash-item">Related devices &amp; locations</div>
-          <div class="dash-item">Financial impact</div>
-          <div class="dash-item">Investigation conclusion</div>
+      <div class="kpi-tile k-med">
+        <div class="kpi-label">High Risk Users</div>
+        <div class="kpi-value">9</div>
+        <div class="kpi-sub">Score &ge; 61</div>
+      </div>
+      <div class="kpi-tile k-med">
+        <div class="kpi-label">Medium Risk Users</div>
+        <div class="kpi-value">13</div>
+        <div class="kpi-sub">Score 31-60</div>
+      </div>
+      <div class="kpi-tile k-info">
+        <div class="kpi-label">Transactions Analyzed</div>
+        <div class="kpi-value">433</div>
+        <div class="kpi-sub">Jan-Jun 2024</div>
+      </div>
+    </div>
+
+    <div class="loss-box">
+      <div>
+        <div class="loss-item-label">Confirmed Refunded (High-Risk)</div>
+        <div class="loss-item-value">Rp 72.4M</div>
+      </div>
+      <div>
+        <div class="loss-item-label">Chargeback Exposure</div>
+        <div class="loss-item-value">Rp 14.8M</div>
+      </div>
+      <div>
+        <div class="loss-item-label">Transactions with Both Flags</div>
+        <div class="loss-item-value">11 txn</div>
+      </div>
+    </div>
+
+    <!-- CASE-001 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-001</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator A &mdash; Impossible Travel</div>
+          <div class="inv-name">U0023 &middot; Jakarta &rarr; Singapore in 14 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH &middot; 55 pts</div>
+      </div>
+      <div class="inv-body open">
+        <div class="inv-inner">
+          <p class="inv-summary">Pengguna U0023 melakukan transaksi normal di Jakarta pukul 10:03 WIB, kemudian dua transaksi bernilai tinggi tercatat di Singapore hanya 14 menit kemudian menggunakan device baru (D0099). Kedua transaksi Singapore mengajukan refund.</p>
+          <h3>Evidence Chain</h3>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Amount</th><th>Device</th><th>Refund</th></tr></thead>
+              <tbody>
+                <tr><td class="td-txn">T000301</td><td>10:03</td><td>Jakarta</td><td class="td-amt">Rp 120,000</td><td>D0023</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-txn">T000302</td><td>10:17</td><td class="td-city">Singapore</td><td class="td-amt">Rp 8,500,000</td><td class="td-flag">D0099</td><td class="flag-yes">YES</td></tr>
+                <tr><td class="td-txn">T000303</td><td>10:20</td><td class="td-city">Singapore</td><td class="td-amt">Rp 4,200,000</td><td class="td-flag">D0099</td><td class="flag-yes">YES</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> Impossible travel confirmed. Device switch + geographic impossibility + immediate refunds. Estimated exposure: <strong>Rp 12,700,000</strong>.</div>
         </div>
       </div>
     </div>
 
-    <div class="eyebrow" style="margin:32px 0 14px;">Business Insights</div>
-    <div class="insight-list">
-      <div class="insight">"Sebagian besar suspicious transactions berasal dari account dengan perubahan device dan peningkatan transaction amount secara signifikan."</div>
-      <div class="insight">"High-risk transactions menunjukkan konsentrasi pada periode waktu tertentu."</div>
-      <div class="insight">"Sebagian kecil user menghasilkan proporsi suspicious transaction value yang relatif besar."</div>
-      <div class="insight">"Beberapa device digunakan oleh banyak account dan perlu dilakukan manual review."</div>
+    <!-- CASE-002 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-002</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator A &mdash; Impossible Travel</div>
+          <div class="inv-name">U0067 &middot; Bandung &rarr; Singapore in 13 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH &middot; 45 pts</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">U0067 bertransaksi di Bandung pukul 02:05, lalu 13 menit kemudian tercatat transaksi Rp 6,75 Juta di Singapore menggunakan device D0101 yang berbeda, dan langsung diajukan refund. Aktivitas jam 02:00 pagi menambah kewaspadaan.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Amount</th><th>Device</th><th>Refund</th></tr></thead>
+              <tbody>
+                <tr><td class="td-txn">T000304</td><td>02:05</td><td>Bandung</td><td class="td-amt">Rp 95,000</td><td>D0067</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-txn">T000305</td><td>02:18</td><td class="td-city">Singapore</td><td class="td-amt">Rp 6,750,000</td><td class="td-flag">D0101</td><td class="flag-yes">YES</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> Off-hours + impossible travel + device baru + immediate refund. Pattern identik dengan CASE-001. Exposure: <strong>Rp 6,750,000</strong>.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="eyebrow" style="margin:32px 0 14px;">Business Recommendations</div>
-    <div class="trigger-grid">
-      <div class="trigger-item" style="flex-direction:column;gap:5px;align-items:flex-start;">
-        <div style="font-weight:600;color:var(--text);font-size:13px;">Strengthen Transaction Monitoring</div>
-        <div style="font-size:12px;">Tambahkan monitoring pada unusual amount, location, device change, &amp; burst patterns.</div>
+    <!-- CASE-003 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-003</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator A &mdash; Impossible Travel (Multi-Hop)</div>
+          <div class="inv-name">U0112 &middot; Surabaya &rarr; Bali &rarr; Singapore in 27 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH &middot; 55 pts</div>
       </div>
-      <div class="trigger-item" style="flex-direction:column;gap:5px;align-items:flex-start;">
-        <div style="font-weight:600;color:var(--text);font-size:13px;">Device Verification</div>
-        <div style="font-size:12px;">Transaksi bernilai tinggi dari device baru memerlukan additional verification step.</div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">U0112 menunjukkan pola impossible travel paling kompleks: 3 kota berbeda dalam 27 menit. Transaksi terakhir di Singapore (Rp 5,2 Juta) langsung direfund.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>TXN ID</th><th>Time</th><th>Location</th><th>Amount</th><th>Device</th><th>Refund</th></tr></thead>
+              <tbody>
+                <tr><td class="td-txn">T000306</td><td>14:32</td><td>Surabaya</td><td class="td-amt">Rp 180,000</td><td>D0112</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-txn">T000307</td><td>14:44</td><td class="td-city">Bali</td><td class="td-amt">Rp 3,900,000</td><td>D0112</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-txn">T000308</td><td>14:59</td><td class="td-city">Singapore</td><td class="td-amt">Rp 5,200,000</td><td>D0112</td><td class="flag-yes">YES</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> Multi-hop impossible travel &mdash; 3 cities in 27 min. Final transaction refunded. Exposure: <strong>Rp 5,200,000</strong>.</div>
+        </div>
       </div>
-      <div class="trigger-item" style="flex-direction:column;gap:5px;align-items:flex-start;">
-        <div style="font-weight:600;color:var(--text);font-size:13px;">Refund Monitoring</div>
-        <div style="font-size:12px;">Account dengan refund ratio abnormal masuk ke monitoring khusus.</div>
+    </div>
+
+    <!-- CASE-004 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-004</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator B &mdash; Transaction Burst</div>
+          <div class="inv-name">U0045 &amp; U0089 &middot; 6&times; Rp 500K in 6 minutes</div>
+        </div>
+        <div class="risk-badge high">HIGH &middot; 25 pts</div>
       </div>
-      <div class="trigger-item" style="flex-direction:column;gap:5px;align-items:flex-start;">
-        <div style="font-weight:600;color:var(--text);font-size:13px;">Continuous Monitoring</div>
-        <div style="font-size:12px;">Dashboard sebagai sistem monitoring perubahan pola transaksi secara berkelanjutan.</div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">Dua pengguna masing-masing melakukan 6 transaksi identik senilai Rp 500.000 dalam window 6 menit, ke 6 merchant berbeda via e-wallet. Pola ini konsisten dengan credential stuffing atau automated transaction script.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>TXN ID</th><th>Timestamp</th><th>Amount</th><th>Merchant</th><th>Method</th></tr></thead>
+              <tbody>
+                <tr><td class="td-txn">T000309</td><td>01:02:00</td><td class="td-amt">Rp 500,000</td><td>M0005</td><td>e-wallet</td></tr>
+                <tr><td class="td-txn">T000310</td><td>01:03:00</td><td class="td-amt">Rp 500,000</td><td>M0006</td><td>e-wallet</td></tr>
+                <tr><td class="td-txn">T000311</td><td>01:04:00</td><td class="td-amt">Rp 500,000</td><td>M0062</td><td>e-wallet</td></tr>
+                <tr><td class="td-txn">T000312</td><td>01:05:00</td><td class="td-amt">Rp 500,000</td><td>M0037</td><td>e-wallet</td></tr>
+                <tr><td class="td-txn">T000313</td><td>01:06:00</td><td class="td-amt">Rp 500,000</td><td>M0078</td><td>e-wallet</td></tr>
+                <tr><td class="td-txn">T000314</td><td>01:07:00</td><td class="td-amt">Rp 500,000</td><td>M0021</td><td>e-wallet</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> 6 transaksi identik, interval 60 detik, 6 merchant berbeda. Combined exposure: <strong>Rp 6,000,000</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE-005 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-005</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator C &mdash; Refund Abuse</div>
+          <div class="inv-name">U0034, U0078, U0156 &middot; Systematic Refund Abuse</div>
+        </div>
+        <div class="risk-badge high">HIGH &middot; 20 pts</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">Tiga pengguna menunjukkan pola refund abuse sistematis dengan refund rate jauh di atas rata-rata populasi (2.8%). U0156 paling agresif dengan 30%+ refund rate dan multiple chargebacks.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>User</th><th>Total Txn</th><th>Refunds</th><th>Chargebacks</th><th>Refund Rate</th><th>Refunded Amount</th></tr></thead>
+              <tbody>
+                <tr><td class="td-user">U0156</td><td>30</td><td>9</td><td class="td-flag">4</td><td class="td-flag">30.0%</td><td class="td-amt">Rp 6,170,000</td></tr>
+                <tr><td class="td-user">U0078</td><td>28</td><td>8</td><td class="td-flag">3</td><td class="td-flag">28.6%</td><td class="td-amt">Rp 5,891,000</td></tr>
+                <tr><td class="td-user">U0034</td><td>30</td><td>10</td><td class="td-flag">4</td><td class="td-flag">33.3%</td><td class="td-amt">Rp 4,028,000</td></tr>
+                <tr style="opacity:0.6"><td>Population avg</td><td>433</td><td>&mdash;</td><td>&mdash;</td><td style="color:var(--sage)">2.8%</td><td>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> Refund rate 10-12&times; di atas rata-rata. Chargeback bersamaan dengan refund = double-dipping. Rekomendasikan account freeze dan verifikasi manual.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE-006 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-006</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator D &mdash; Unusual Amount</div>
+          <div class="inv-name">U0019, U0057, U0103, U0144, U0191 &middot; 12&ndash;20&times; Own Average</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM &middot; 20 pts</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">Lima pengguna melakukan transaksi transfer yang nilainya 12-20&times; di atas rata-rata historis mereka sendiri. Lonjakan ekstrem tanpa perubahan pola sebelumnya.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>User</th><th>TXN ID</th><th>Amount</th><th>User Avg</th><th>Multiple</th><th>Refund</th></tr></thead>
+              <tbody>
+                <tr><td class="td-user">U0103</td><td class="td-txn">T000416</td><td class="td-amt">Rp 13,168,790</td><td>Rp 742,000</td><td class="td-flag">17.8&times;</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-user">U0191</td><td class="td-txn">T000420</td><td class="td-amt">Rp 14,723,099</td><td>Rp 820,000</td><td class="td-flag">18.0&times;</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-user">U0019</td><td class="td-txn">T000411</td><td class="td-amt">Rp 7,626,432</td><td>Rp 570,000</td><td class="td-flag">13.4&times;</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-user">U0057</td><td class="td-txn">T000413</td><td class="td-amt">Rp 4,181,651</td><td>Rp 308,000</td><td class="td-flag">13.6&times;</td><td class="flag-no">&mdash;</td></tr>
+                <tr><td class="td-user">U0144</td><td class="td-txn">T000418</td><td class="td-amt">Rp 1,918,049</td><td>Rp 159,000</td><td class="td-flag">12.1&times;</td><td class="flag-no">&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding medium"><strong>Finding:</strong> Tidak ada refund, namun lonjakan ekstrem perlu verifikasi. Kemungkinan: legitimate high-value transfer, phishing-induced transfer, atau money mule activity.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE-007 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-007</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator E &mdash; New Device + High Value</div>
+          <div class="inv-name">U0033, U0071, U0118, U0162 &middot; First-Use Device + &gt;p95 Amount</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM &middot; 20 pts</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">Empat pengguna melakukan transaksi bernilai sangat tinggi menggunakan device yang baru pertama kali dipakai. Tiga dari empat transaksi langsung mengajukan refund.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>User</th><th>TXN ID</th><th>Device</th><th>Amount</th><th>p95</th><th>Multiple</th><th>Refund</th></tr></thead>
+              <tbody>
+                <tr><td class="td-user">U0033</td><td class="td-txn">T000421</td><td class="td-flag">D0140</td><td class="td-amt">Rp 7,800,000</td><td>Rp 1,127,000</td><td class="td-flag">6.9&times;</td><td class="flag-yes">YES</td></tr>
+                <tr><td class="td-user">U0118</td><td class="td-txn">T000423</td><td class="td-flag">D0142</td><td class="td-amt">Rp 9,200,000</td><td>Rp 1,127,000</td><td class="td-flag">8.2&times;</td><td class="flag-yes">YES</td></tr>
+                <tr><td class="td-user">U0162</td><td class="td-txn">T000424</td><td class="td-flag">D0143</td><td class="td-amt">Rp 6,100,000</td><td>Rp 1,127,000</td><td class="td-flag">5.4&times;</td><td class="flag-yes">YES</td></tr>
+                <tr><td class="td-user">U0071</td><td class="td-txn">T000422</td><td class="td-flag">D0141</td><td class="td-amt">Rp 5,300,000</td><td>Rp 1,127,000</td><td class="td-flag">4.7&times;</td><td class="flag-yes">YES</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding"><strong>Finding:</strong> Semua 4 transaksi: device baru + amount ekstrem + langsung refund. Combined exposure: <strong>Rp 28,400,000</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE-008 -->
+    <div class="inv-card">
+      <div class="inv-head" onclick="toggleCase(this)">
+        <div class="inv-case-id">CASE-008</div>
+        <div class="inv-title-block">
+          <div class="inv-type">Indicator F &mdash; Shared Device</div>
+          <div class="inv-name">D0150 (4 accounts) &amp; D0151 (5 accounts) &middot; Linked Account Ring</div>
+        </div>
+        <div class="risk-badge medium">MEDIUM &middot; 15 pts</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-inner">
+          <p class="inv-summary">Dua device digunakan bersama oleh kelompok akun berbeda &mdash; D0150 oleh 4 akun dan D0151 oleh 5 akun. Mengindikasikan account ring atau device sharing terorganisir.</p>
+          <div class="ev-table-wrap">
+            <table>
+              <thead><tr><th>Device</th><th>Type</th><th>OS</th><th>Accounts</th><th>Account List</th><th>Total Amount</th></tr></thead>
+              <tbody>
+                <tr><td class="td-flag">D0150</td><td>Tablet</td><td>Android</td><td class="td-flag">4</td><td class="td-user" style="font-size:11px">U0041, U0082, U0133, U0177</td><td class="td-amt">Rp 438,405</td></tr>
+                <tr><td class="td-flag">D0151</td><td>Mobile</td><td>iOS</td><td class="td-flag">5</td><td class="td-user" style="font-size:11px">U0015, U0066, U0099, U0155, U0188</td><td class="td-amt">Rp 1,268,582</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="finding medium"><strong>Finding:</strong> Shared device &gt;2 akun = potensi synthetic identity fraud atau money mule ring. Rekomendasikan freeze semua akun terkait.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RISK REGISTER -->
+    <div class="sec-label" style="margin-top:48px;"><span>Risk Register</span></div>
+    <h2 class="sec-title" style="font-size:clamp(20px,3vw,28px);margin-bottom:18px;">All Flagged Accounts</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>User ID</th><th>Risk Level</th><th>Score</th><th>Score Bar</th><th>Triggered Indicators</th><th>Case</th></tr></thead>
+        <tbody>
+          <tr><td class="td-user">U0023</td><td><span class="risk-badge high">HIGH</span></td><td class="sc">55</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:88%"></div></div></div></td><td>Impossible Travel</td><td class="sc">001</td></tr>
+          <tr><td class="td-user">U0067</td><td><span class="risk-badge high">HIGH</span></td><td class="sc">45</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:72%"></div></div></div></td><td>Impossible Travel</td><td class="sc">002</td></tr>
+          <tr><td class="td-user">U0112</td><td><span class="risk-badge high">HIGH</span></td><td class="sc">55</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill high" style="width:88%"></div></div></div></td><td>Impossible Travel</td><td class="sc">003</td></tr>
+          <tr><td class="td-user">U0045</td><td><span class="risk-badge high">HIGH</span></td><td class="sc">25</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:40%"></div></div></div></td><td>Transaction Burst</td><td class="sc">004</td></tr>
+          <tr><td class="td-user">U0089</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">25</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:40%"></div></div></div></td><td>Transaction Burst</td><td class="sc">004</td></tr>
+          <tr><td class="td-user">U0156</td><td><span class="risk-badge high">HIGH</span></td><td class="sc">30</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:48%"></div></div></div></td><td>Refund Abuse</td><td class="sc">005</td></tr>
+          <tr><td class="td-user">U0078</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Refund Abuse</td><td class="sc">005</td></tr>
+          <tr><td class="td-user">U0034</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Refund Abuse</td><td class="sc">005</td></tr>
+          <tr><td class="td-user">U0103</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Unusual Amount</td><td class="sc">006</td></tr>
+          <tr><td class="td-user">U0191</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>Unusual Amount</td><td class="sc">006</td></tr>
+          <tr><td class="td-user">U0033</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>New Device + High Value</td><td class="sc">007</td></tr>
+          <tr><td class="td-user">U0118</td><td><span class="risk-badge medium">MEDIUM</span></td><td class="sc">20</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill medium" style="width:32%"></div></div></div></td><td>New Device + High Value</td><td class="sc">007</td></tr>
+          <tr><td class="td-user">U0015</td><td><span class="risk-badge low">LOW</span></td><td class="sc">15</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill low" style="width:24%"></div></div></div></td><td>Shared Device</td><td class="sc">008</td></tr>
+          <tr><td class="td-user">U0041</td><td><span class="risk-badge low">LOW</span></td><td class="sc">15</td><td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill low" style="width:24%"></div></div></div></td><td>Shared Device</td><td class="sc">008</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="sec-label" style="margin-top:48px;"><span>Business Recommendations</span></div>
+    <h2 class="sec-title" style="font-size:clamp(20px,3vw,28px);margin-bottom:18px;">Tindak Lanjut &amp; Prioritas</h2>
+    <ul class="rec-list">
+      <li class="rec-item">
+        <div class="rec-num">01</div>
+        <div>
+          <div class="rec-title">Immediate Account Freeze &mdash; CASE-001, 002, 003 <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Freeze akun U0023, U0067, dan U0112 segera. Ketiga kasus menunjukkan impossible travel yang dikonfirmasi disertai refund langsung. Notifikasi pengguna untuk verifikasi identitas sebelum akun diaktifkan kembali.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">02</div>
+        <div>
+          <div class="rec-title">Implement Real-Time Velocity Check <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Pasang rate limiter: maksimum 3 transaksi transfer per 10 menit per akun. CASE-004 menunjukkan 6 transaksi dalam 6 menit dapat lolos tanpa trigger apapun.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">03</div>
+        <div>
+          <div class="rec-title">Geo-Velocity Block Rule <span class="priority-chip urgent">URGENT</span></div>
+          <p class="rec-desc">Blokir otomatis transaksi jika dua lokasi berurutan memiliki travel time yang tidak mungkin. Trigger step-up authentication (OTP tambahan) jika jarak &gt; 500 km dalam 2 jam.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">04</div>
+        <div>
+          <div class="rec-title">Refund Rate Monitoring Dashboard <span class="priority-chip high-p">HIGH</span></div>
+          <p class="rec-desc">Bangun monitoring real-time refund rate per user. Threshold otomatis: jika refund rate melampaui 15% dalam 30 hari &rarr; hold refund untuk manual review.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">05</div>
+        <div>
+          <div class="rec-title">New Device Step-Up Authentication <span class="priority-chip high-p">HIGH</span></div>
+          <p class="rec-desc">Setiap penggunaan device baru untuk transaksi &gt; Rp 1 Juta harus melalui step-up authentication (OTP email + SMS). CASE-007 menunjukkan 4 transaksi Rp 5&ndash;9 Juta dari device baru tanpa friction apapun.</p>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">06</div>
+        <div>
+          <div class="rec-title">Shared Device KYC Re-verification <span class="priority-chip medium-p">MEDIUM</span></div>
+          <p class="rec-desc">Semua akun yang terhubung ke D0150 dan D0151 (9 akun) harus melalui KYC ulang. Device yang digunakan &gt; 2 akun aktif harus di-flag secara permanen.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<!-- DASHBOARD SPECIFICATION -->
+<div class="wrap">
+  <section class="section" id="spec">
+    <div class="sec-label"><span>Dashboard Specification</span></div>
+    <h2 class="sec-title">Power BI Investigation<br>Dashboard Design</h2>
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.9;max-width:640px;">
+      Spesifikasi lengkap 4-halaman interactive dashboard &mdash; data model, DAX measures, visual blueprint, dan filter logic untuk Power BI.
+    </p>
+
+    <div class="dash-spec-tabs">
+      <div class="ds-tab active" onclick="switchTab(0)">Page 1 &middot; Overview</div>
+      <div class="ds-tab" onclick="switchTab(1)">Page 2 &middot; Transaction Intelligence</div>
+      <div class="ds-tab" onclick="switchTab(2)">Page 3 &middot; Suspicious Activity</div>
+      <div class="ds-tab" onclick="switchTab(3)">Page 4 &middot; Case Drill-Down</div>
+      <div class="ds-tab" onclick="switchTab(4)">Data Model</div>
+      <div class="ds-tab" onclick="switchTab(5)">DAX Measures</div>
+    </div>
+
+    <!-- PAGE 1 -->
+    <div class="ds-panel active" id="ds-panel-0">
+      <p>Halaman utama dashboard. Gambaran keseluruhan kondisi fraud platform &mdash; metric utama, trend, dan distribusi risiko.</p>
+      <h3>KPI Cards</h3>
+      <div class="kpi-row">
+        <div class="kpi-mock a-info"><div class="kpi-mock-label">Total Transactions</div><div class="kpi-mock-val">433</div><div class="kpi-mock-sub">Jan&ndash;Jun 2024</div></div>
+        <div class="kpi-mock a-info"><div class="kpi-mock-label">Total Value</div><div class="kpi-mock-val">Rp 156M</div><div class="kpi-mock-sub">All transactions</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Suspicious Txn</div><div class="kpi-mock-val">133</div><div class="kpi-mock-sub">30.7% of total</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">High Risk Users</div><div class="kpi-mock-val">9</div><div class="kpi-mock-sub">Score &ge; 61</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Potential Loss</div><div class="kpi-mock-val">Rp 87.2M</div><div class="kpi-mock-sub">Refund exposure</div></div>
+      </div>
+      <h3>Visual Layout</h3>
+      <div class="bp-grid cols-2">
+        <div class="visual-block">
+          <div class="vb-type">Donut Chart</div>
+          <div class="vb-title">Risk Level Distribution</div>
+          <div class="vb-desc">Proporsi HIGH / MEDIUM / LOW dari semua flagged users.</div>
+          <div class="vb-fields"><span class="field-chip">risk_level</span><span class="field-chip">COUNT(user_id)</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Line + Bar Combo</div>
+          <div class="vb-title">Monthly Transaction Volume &amp; Suspicious Trend</div>
+          <div class="vb-desc">Dual axis: total txn count (bar) + suspicious txn count (line) per bulan.</div>
+          <div class="vb-fields"><span class="field-chip">Month</span><span class="field-chip">[Total Transactions]</span><span class="field-chip">[Suspicious Transactions]</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Stacked Bar</div>
+          <div class="vb-title">Transaction Value by Category</div>
+          <div class="vb-desc">Nilai total per kategori, warna dibagi normal vs refunded.</div>
+          <div class="vb-fields"><span class="field-chip">category</span><span class="field-chip">SUM(amount)</span><span class="field-chip">refund_flag</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Table / Matrix</div>
+          <div class="vb-title">Investigation Case Register</div>
+          <div class="vb-desc">8 kasus: Case ID, type, risk level, users, exposure. Clickable untuk drill-down ke Page 4.</div>
+          <div class="vb-fields"><span class="field-chip">case_id</span><span class="field-chip">risk_level</span><span class="field-chip">[Exposure Amount]</span></div>
+        </div>
+      </div>
+      <h3>Page Filters</h3>
+      <div class="filter-grid">
+        <div class="filter-card"><div class="filter-label">Date Range</div><div class="filter-type">Date Slicer</div><div class="filter-field">transactions[timestamp]</div></div>
+        <div class="filter-card"><div class="filter-label">Risk Level</div><div class="filter-type">Dropdown / Chip</div><div class="filter-field">risk_scores[risk_level]</div></div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="ds-panel" id="ds-panel-1">
+      <p>Analisis mendalam karakteristik transaksi &mdash; distribusi, pola waktu, lokasi, dan payment method. Membangun baseline sebelum anomali ditampilkan.</p>
+      <h3>KPI Cards</h3>
+      <div class="kpi-row">
+        <div class="kpi-mock a-info"><div class="kpi-mock-label">Median Amount</div><div class="kpi-mock-val">Rp 258K</div><div class="kpi-mock-sub">50th percentile</div></div>
+        <div class="kpi-mock a-info"><div class="kpi-mock-label">p95 Amount</div><div class="kpi-mock-val">Rp 1.1M</div><div class="kpi-mock-sub">High-value threshold</div></div>
+        <div class="kpi-mock a-med"><div class="kpi-mock-label">Refund Rate</div><div class="kpi-mock-val">2.8%</div><div class="kpi-mock-sub">Population average</div></div>
+        <div class="kpi-mock a-med"><div class="kpi-mock-label">Peak Hour</div><div class="kpi-mock-val">14:00</div><div class="kpi-mock-sub">Most active hour</div></div>
+      </div>
+      <h3>Visual Layout</h3>
+      <div class="bp-grid cols-2">
+        <div class="visual-block">
+          <div class="vb-type">Histogram</div>
+          <div class="vb-title">Transaction Amount Distribution</div>
+          <div class="vb-desc">Bin-based histogram. X = amount range, Y = count. Reference lines: p50, p95.</div>
+          <div class="vb-fields"><span class="field-chip">amount_bin</span><span class="field-chip">COUNT</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Heatmap / Matrix</div>
+          <div class="vb-title">Transactions by Hour &times; Day of Week</div>
+          <div class="vb-desc">Grid: rows = hari, kolom = jam 00&ndash;23. Color intensity = jumlah transaksi.</div>
+          <div class="vb-fields"><span class="field-chip">day_of_week</span><span class="field-chip">hour_of_day</span><span class="field-chip">COUNT</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Bar Chart</div>
+          <div class="vb-title">Transaction Volume by City</div>
+          <div class="vb-desc">Bar horizontal diurutkan descending. Secondary color = refund rate per kota.</div>
+          <div class="vb-fields"><span class="field-chip">location_id</span><span class="field-chip">COUNT</span><span class="field-chip">[Refund Rate]</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Pie + Table</div>
+          <div class="vb-title">Payment Method Share &amp; Refund Rate</div>
+          <div class="vb-desc">Pie: proporsi txn per payment method. Side table: refund rate dan avg amount per method.</div>
+          <div class="vb-fields"><span class="field-chip">payment_method</span><span class="field-chip">COUNT</span><span class="field-chip">[Refund Rate]</span></div>
+        </div>
+      </div>
+      <h3>Page Filters</h3>
+      <div class="filter-grid">
+        <div class="filter-card"><div class="filter-label">Date Range</div><div class="filter-type">Date Slicer</div><div class="filter-field">transactions[timestamp]</div></div>
+        <div class="filter-card"><div class="filter-label">Category</div><div class="filter-type">Multi-select Dropdown</div><div class="filter-field">transactions[category]</div></div>
+        <div class="filter-card"><div class="filter-label">Payment Method</div><div class="filter-type">Multi-select Chips</div><div class="filter-field">transactions[payment_method]</div></div>
+        <div class="filter-card"><div class="filter-label">Transaction Status</div><div class="filter-type">Dropdown</div><div class="filter-field">transactions[transaction_status]</div></div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="ds-panel" id="ds-panel-2">
+      <p>Halaman investigasi utama. Semua 7 anomaly indicators, top suspicious users, device analysis, dan pola burst + refund abuse.</p>
+      <h3>KPI Cards</h3>
+      <div class="kpi-row">
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Impossible Travel</div><div class="kpi-mock-val">3</div><div class="kpi-mock-sub">Users flagged</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Burst Events</div><div class="kpi-mock-val">2</div><div class="kpi-mock-sub">Users &middot; 12 burst txn</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Refund Abusers</div><div class="kpi-mock-val">3</div><div class="kpi-mock-sub">Rate &gt;5&times; avg</div></div>
+        <div class="kpi-mock a-high"><div class="kpi-mock-label">Shared Devices</div><div class="kpi-mock-val">2</div><div class="kpi-mock-sub">D0150, D0151</div></div>
+      </div>
+      <h3>Visual Layout</h3>
+      <div class="bp-grid cols-2">
+        <div class="visual-block">
+          <div class="vb-type">Bar Chart (Sorted)</div>
+          <div class="vb-title">Top Suspicious Users by Risk Score</div>
+          <div class="vb-desc">Horizontal bar. Color = risk level. Conditional formatting on score. Tooltip: triggered indicators.</div>
+          <div class="vb-fields"><span class="field-chip">user_id</span><span class="field-chip">composite_score</span><span class="field-chip">risk_level</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Scatter Chart</div>
+          <div class="vb-title">Risk Score vs Refund Rate</div>
+          <div class="vb-desc">X = composite_score, Y = refund_rate, size = total_amount. Color = risk_level. Quadrant lines at score=31, rate=5%.</div>
+          <div class="vb-fields"><span class="field-chip">composite_score</span><span class="field-chip">refund_rate</span><span class="field-chip">total_amount</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Table (Highlighted)</div>
+          <div class="vb-title">Refund Abuse Detail</div>
+          <div class="vb-desc">Tabel: user_id, txn_count, refund_count, refund_rate, refunded_amount. Conditional formatting: rate &gt; 10% = highlighted.</div>
+          <div class="vb-fields"><span class="field-chip">user_id</span><span class="field-chip">refund_count</span><span class="field-chip">[Refund Rate]</span><span class="field-chip">[Refunded Amount]</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Matrix</div>
+          <div class="vb-title">Shared Device Account Mapping</div>
+          <div class="vb-desc">Matrix: device_id vs user_id dengan dot jika ada koneksi. Bar: devices yang digunakan &gt;1 akun.</div>
+          <div class="vb-fields"><span class="field-chip">device_id</span><span class="field-chip">user_id</span><span class="field-chip">COUNT(DISTINCT user)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="ds-panel" id="ds-panel-3">
+      <p>Halaman interaktif yang dapat difilter per case. Profile user, evidence chain, timeline, dan financial impact secara detail.</p>
+      <div class="spec-note"><strong>Interactivity:</strong> User memilih Case ID dari slicer &rarr; semua visual otomatis filter ke data kasus tersebut.</div>
+      <h3>Page Controls</h3>
+      <div class="filter-grid">
+        <div class="filter-card"><div class="filter-label">Case Selector</div><div class="filter-type">Single-select Slicer</div><div class="filter-field">cases[case_id]</div></div>
+        <div class="filter-card"><div class="filter-label">User within Case</div><div class="filter-type">Dropdown</div><div class="filter-field">cases[user_id]</div></div>
+      </div>
+      <h3>Visual Layout</h3>
+      <div class="bp-grid cols-2">
+        <div class="visual-block">
+          <div class="vb-type">Card &mdash; User Profile</div>
+          <div class="vb-title">Subject Profile</div>
+          <div class="vb-desc">User ID, kota, usia akun, total txn, avg amount, device count, refund rate. Flagged indicators sebagai chips berwarna.</div>
+          <div class="vb-fields"><span class="field-chip">users.*</span><span class="field-chip">[Composite Score]</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Timeline / Table</div>
+          <div class="vb-title">Transaction Evidence Chain</div>
+          <div class="vb-desc">Semua transaksi user diurutkan timestamp. Row highlight untuk suspicious transactions.</div>
+          <div class="vb-fields"><span class="field-chip">transaction_id</span><span class="field-chip">timestamp</span><span class="field-chip">amount</span><span class="field-chip">refund_flag</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">Scatter / Timeline</div>
+          <div class="vb-title">Transaction Amount Over Time</div>
+          <div class="vb-desc">X = timestamp, Y = amount. Dots: rust = refunded, netral = normal. Reference line: p95 threshold.</div>
+          <div class="vb-fields"><span class="field-chip">timestamp</span><span class="field-chip">amount</span><span class="field-chip">refund_flag</span></div>
+        </div>
+        <div class="visual-block">
+          <div class="vb-type">KPI Cards (2&times;2)</div>
+          <div class="vb-title">Case Financial Impact</div>
+          <div class="vb-desc">Total Transaction Value &middot; Refunded Amount &middot; Chargeback Amount &middot; Estimated Exposure.</div>
+          <div class="vb-fields"><span class="field-chip">[Total Amount]</span><span class="field-chip">[Refunded Amount]</span><span class="field-chip">[Chargeback Amount]</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA MODEL -->
+    <div class="ds-panel" id="ds-panel-4">
+      <p>Star schema dengan <code style="font-family:'IBM Plex Mono',monospace;background:var(--surface-alt);padding:1px 6px;border-radius:3px;">transactions</code> sebagai fact table dan tiga dimension tables.</p>
+      <div class="model-wrap">
+        <div class="model-grid">
+          <div class="model-table">
+            <div class="model-table-header">transactions (Fact)</div>
+            <div class="model-table-row pk"><span>transaction_id</span><span class="col-type">PK &middot; STR</span></div>
+            <div class="model-table-row fk"><span>user_id</span><span class="col-type">FK &middot; STR</span></div>
+            <div class="model-table-row fk"><span>merchant_id</span><span class="col-type">FK &middot; STR</span></div>
+            <div class="model-table-row fk"><span>device_id</span><span class="col-type">FK &middot; STR</span></div>
+            <div class="model-table-row"><span>timestamp</span><span class="col-type">DT</span></div>
+            <div class="model-table-row"><span>amount</span><span class="col-type">FLOAT</span></div>
+            <div class="model-table-row"><span>category</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>location_id</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>payment_method</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>transaction_status</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>refund_flag</span><span class="col-type">INT</span></div>
+            <div class="model-table-row"><span>chargeback_flag</span><span class="col-type">INT</span></div>
+          </div>
+          <div class="model-table">
+            <div class="model-table-header">users (Dim)</div>
+            <div class="model-table-row pk"><span>user_id</span><span class="col-type">PK &middot; STR</span></div>
+            <div class="model-table-row"><span>username</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>city</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>age_group</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>account_status</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>account_age_days</span><span class="col-type">INT</span></div>
+            <div class="model-table-row"><span>registration_date</span><span class="col-type">DATE</span></div>
+            <div class="model-table-row"><span>risk_score</span><span class="col-type">INT</span></div>
+          </div>
+          <div class="model-table">
+            <div class="model-table-header">devices (Dim)</div>
+            <div class="model-table-row pk"><span>device_id</span><span class="col-type">PK &middot; STR</span></div>
+            <div class="model-table-row"><span>device_type</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>operating_system</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>first_seen</span><span class="col-type">DT</span></div>
+            <div class="model-table-row"><span>last_seen</span><span class="col-type">DT</span></div>
+          </div>
+          <div class="model-table">
+            <div class="model-table-header">merchants (Dim)</div>
+            <div class="model-table-row pk"><span>merchant_id</span><span class="col-type">PK &middot; STR</span></div>
+            <div class="model-table-row"><span>merchant_name</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>category</span><span class="col-type">STR</span></div>
+            <div class="model-table-row"><span>city</span><span class="col-type">STR</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAX MEASURES -->
+    <div class="ds-panel" id="ds-panel-5">
+      <p>Semua calculated measures untuk dashboard, dikelompokkan berdasarkan domain.</p>
+      <h3>Transaction Metrics</h3>
+      <div class="dax-block"><div class="dax-name">Total Transactions</div><div class="dax-code"><span class="dax-func">COUNTROWS</span>(transactions)</div></div>
+      <div class="dax-block"><div class="dax-name">Total Transaction Value</div><div class="dax-code"><span class="dax-func">SUM</span>(transactions[amount])</div></div>
+      <div class="dax-block"><div class="dax-name">Average Transaction Value</div><div class="dax-code"><span class="dax-func">AVERAGE</span>(transactions[amount])</div></div>
+      <h3>Risk &amp; Suspicious Metrics</h3>
+      <div class="dax-block">
+        <div class="dax-name">Suspicious Transactions</div>
+        <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">COUNTROWS</span>(transactions),
+    transactions[refund_flag] = <span class="dax-num">1</span>
+        || transactions[chargeback_flag] = <span class="dax-num">1</span>
+)</div>
+      </div>
+      <div class="dax-block">
+        <div class="dax-name">Suspicious Transaction Rate</div>
+        <div class="dax-code"><span class="dax-func">DIVIDE</span>([Suspicious Transactions], [Total Transactions], <span class="dax-num">0</span>)</div>
+      </div>
+      <div class="dax-block">
+        <div class="dax-name">High Risk Users</div>
+        <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">COUNTROWS</span>(risk_scores),
+    risk_scores[risk_level] = <span class="dax-string">"HIGH"</span>
+)</div>
+      </div>
+      <h3>Financial Impact</h3>
+      <div class="dax-block">
+        <div class="dax-name">Refunded Amount</div>
+        <div class="dax-code"><span class="dax-func">CALCULATE</span>(<span class="dax-func">SUM</span>(transactions[amount]), transactions[refund_flag] = <span class="dax-num">1</span>)</div>
+      </div>
+      <div class="dax-block">
+        <div class="dax-name">Refund Rate</div>
+        <div class="dax-code"><span class="dax-func">DIVIDE</span>(
+    <span class="dax-func">CALCULATE</span>(<span class="dax-func">COUNTROWS</span>(transactions), transactions[refund_flag] = <span class="dax-num">1</span>),
+    <span class="dax-func">COUNTROWS</span>(transactions), <span class="dax-num">0</span>
+)</div>
+      </div>
+      <div class="dax-block">
+        <div class="dax-name">Potential Loss Exposure</div>
+        <div class="dax-code"><span class="dax-func">CALCULATE</span>(
+    <span class="dax-func">SUM</span>(transactions[amount]),
+    <span class="dax-func">FILTER</span>(
+        transactions,
+        (transactions[refund_flag] = <span class="dax-num">1</span> || transactions[chargeback_flag] = <span class="dax-num">1</span>)
+            &amp;&amp; <span class="dax-func">RELATED</span>(risk_scores[composite_score]) &gt;= <span class="dax-num">31</span>
+    )
+)</div>
+      </div>
+      <h3>Time Intelligence</h3>
+      <div class="dax-block">
+        <div class="dax-name">Transactions MoM Growth</div>
+        <div class="dax-code"><span class="dax-func">VAR</span> CurrentMonth = [Total Transactions]
+<span class="dax-func">VAR</span> PriorMonth = <span class="dax-func">CALCULATE</span>(
+    [Total Transactions], <span class="dax-func">PREVIOUSMONTH</span>(date_table[Date])
+)
+<span class="dax-func">RETURN DIVIDE</span>(CurrentMonth - PriorMonth, PriorMonth, <span class="dax-num">0</span>)</div>
       </div>
     </div>
   </section>
@@ -721,8 +1456,8 @@ Average:  2 refunds / 100 txn</div>
 <!-- TECH STACK -->
 <div class="wrap">
   <section class="section" id="stack">
-    <div class="eyebrow">07 · Technology Stack</div>
-    <h2 class="section-title">Tools &amp; Technologies</h2>
+    <div class="sec-label"><span>Technology Stack</span></div>
+    <h2 class="sec-title">Tools &amp; Technologies</h2>
     <div class="tech-grid">
       <div class="tech-group">
         <div class="tech-group-label">Data Processing</div>
@@ -767,35 +1502,34 @@ Average:  2 refunds / 100 txn</div>
   </section>
 </div>
 
-<!-- PORTFOLIO OUTCOMES -->
+<!-- OUTCOME -->
 <div class="wrap">
   <section class="section" id="outcome">
-    <div class="eyebrow">08 · Portfolio Outcome</div>
-    <h2 class="section-title">Final Deliverables</h2>
+    <div class="sec-label"><span>Portfolio Outcome</span></div>
+    <h2 class="sec-title">Final Deliverables</h2>
     <div class="outcomes">
-      <div class="outcome"><span class="oc-check">✓</span>SQL investigation queries</div>
-      <div class="outcome"><span class="oc-check">✓</span>Python data cleaning pipeline</div>
-      <div class="outcome"><span class="oc-check">✓</span>Exploratory Data Analysis</div>
-      <div class="outcome"><span class="oc-check">✓</span>Statistical analysis</div>
-      <div class="outcome"><span class="oc-check">✓</span>Anomaly investigation (7 indicators)</div>
-      <div class="outcome"><span class="oc-check">✓</span>Risk scoring system</div>
-      <div class="outcome"><span class="oc-check">✓</span>Power BI 4-page dashboard</div>
-      <div class="outcome"><span class="oc-check">✓</span>Investigation case study</div>
-      <div class="outcome"><span class="oc-check">✓</span>Business insights</div>
-      <div class="outcome"><span class="oc-check">✓</span>Business recommendations</div>
-      <div class="outcome"><span class="oc-check">✓</span>Professional GitHub documentation</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>SQL investigation queries</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Python data cleaning pipeline</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Exploratory Data Analysis</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Statistical analysis</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Anomaly investigation (7 indicators)</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Risk scoring system</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>8 Investigation cases with evidence</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Power BI 4-page dashboard spec</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Business insights &amp; recommendations</div>
+      <div class="outcome"><span class="oc-check">&#10003;</span>Professional GitHub documentation</div>
     </div>
   </section>
 </div>
 
-<!-- FUTURE DEVELOPMENT -->
+<!-- FUTURE ROADMAP -->
 <div class="wrap">
   <section class="section" id="future">
-    <div class="eyebrow">09 · Future Development</div>
-    <h2 class="section-title">Roadmap: Data Analyst → Data Scientist</h2>
+    <div class="sec-label"><span>Future Development</span></div>
+    <h2 class="sec-title">Roadmap: Data Analyst &rarr; Data Scientist</h2>
     <div class="future-grid">
       <div class="future-ph current">
-        <div class="future-ph-label">Phase 1 · Current</div>
+        <div class="future-ph-label">Phase 1 &middot; Current</div>
         <div class="future-ph-title">Data Analyst</div>
         <div class="future-ph-items">
           <div class="future-ph-item">SQL investigation</div>
@@ -807,7 +1541,7 @@ Average:  2 refunds / 100 txn</div>
         </div>
       </div>
       <div class="future-ph">
-        <div class="future-ph-label">Phase 2 · Planned</div>
+        <div class="future-ph-label">Phase 2 &middot; Planned</div>
         <div class="future-ph-title">Advanced Analytics</div>
         <div class="future-ph-items">
           <div class="future-ph-item">User behavior segmentation</div>
@@ -817,7 +1551,7 @@ Average:  2 refunds / 100 txn</div>
         </div>
       </div>
       <div class="future-ph">
-        <div class="future-ph-label">Phase 3 · Future</div>
+        <div class="future-ph-label">Phase 3 &middot; Future</div>
         <div class="future-ph-title">Machine Learning</div>
         <div class="future-ph-items">
           <div class="future-ph-item">Feature Engineering</div>
@@ -830,7 +1564,6 @@ Average:  2 refunds / 100 txn</div>
   </section>
 </div>
 
-<!-- FOOTER -->
 <div class="footer-wrap">
   <div class="wrap">
     <footer class="footer">
@@ -839,16 +1572,22 @@ Average:  2 refunds / 100 txn</div>
         <span>Baskara Kresna Juniarto</span>
         <span>Data Analyst</span>
         <span>CASE #DCI-2024-001</span>
-        <span>Transaction Fraud &amp; Anomaly Analytics</span>
-        <a href="https://github.com/basxntana/digital-crime-investigation" target="_blank" style="color:var(--teal);text-decoration:none;">github.com/basxntana/digital-crime-investigation ↗</a>
+        <a href="https://github.com/basxntana/digital-crime-investigation" target="_blank" rel="noopener">github.com/basxntana/digital-crime-investigation &#8599;</a>
       </div>
     </footer>
   </div>
 </div>
 
 <script>
-function toggle(headEl) {
+function togglePhase(headEl) {
   headEl.closest('.phase').classList.toggle('open');
+}
+function toggleCase(headEl) {
+  headEl.nextElementSibling.classList.toggle('open');
+}
+function switchTab(idx) {
+  document.querySelectorAll('.ds-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.ds-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
 }
 </script>
 </body>
