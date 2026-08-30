@@ -74,31 +74,34 @@ Tim Finance mendeteksi indikasi *financial leakage*: jumlah refund meningkat, be
 digital-crime-investigation/
 │
 ├── data/
-│   ├── transactions.csv        # 433 transaksi Jan–Jun 2024
-│   ├── users.csv               # 200 user profiles
-│   ├── devices.csv             # 160 device records
-│   └── merchants.csv           # 80 merchants
+│   ├── transactions.csv              # Transaction records
+│   ├── users.csv                     # User profiles
+│   ├── devices.csv                   # Device records
+│   └── merchants.csv                 # Merchant records
 │
 ├── sql/
-│   ├── 01_data_validation.sql  # Null checks, integrity, quality score
-│   ├── 02_transaction_analysis.sql  # Trends, category, geo heatmap
-│   ├── 03_user_behavior.sql    # User profiling, cohort analysis
-│   ├── 04_anomaly_analysis.sql # Indicators A–G + composite scoring
-│   └── 05_investigation_cases.sql   # Named case evidence chains
+│   ├── 01_data_validation.sql        # Data quality & integrity checks
+│   ├── 02_transaction_analysis.sql   # Transaction trends & patterns
+│   ├── 03_user_behavior.sql          # User profiling & behavior analysis
+│   ├── 04_anomaly_analysis.sql       # Anomaly indicators & risk scoring
+│   └── 05_investigation_cases.sql    # Investigation cases & evidence chains
 │
 ├── notebooks/
-│   ├── 01_data_cleaning.ipynb  # Data quality & cleaning pipeline
-│   ├── 02_eda.ipynb            # Exploratory Data Analysis
-│   └── 03_investigation.ipynb  # Anomaly detection & case deep-dives
+│   └── full_investigation.ipynb      # End-to-end data cleaning, EDA & investigation
 │
 ├── dashboard/
-│   └── dashboard_spec.html     # Power BI 4-page dashboard specification
+│   ├── digital-crime-investigation.pbix  # Power BI investigation dashboard
+│   └── dashboard_spec.html                # Dashboard design & specification
 │
 ├── reports/
-│   └── investigation_report.html  # Final investigation report
+│   └── investigation_report.html     # Final investigation report
 │
-├── images/                     # Generated charts from notebooks
-└── README.md
+├── images/
+│   └── ...                            # Dashboard & analysis visualizations
+│
+├── index.html                         # Interactive project case study
+├── README.md                          # Project documentation
+└── .gitignore
 ```
 
 ---
@@ -108,22 +111,32 @@ digital-crime-investigation/
 ```
 Raw Dataset (4 CSV tables)
     │
-    ├─ Phase 1 · Data Understanding    → 01_data_validation.sql
-    │                                  → 01_data_cleaning.ipynb
+    ├─ Phase 1 · Data Understanding & Cleaning
+    │       → sql/01_data_validation.sql
+    │       → notebooks/full_investigation.ipynb
     │
-    ├─ Phase 2 · Baseline Analysis     → 02_transaction_analysis.sql
-    │                                  → 02_eda.ipynb
+    ├─ Phase 2 · Baseline Analysis
+    │       → sql/02_transaction_analysis.sql
+    │       → notebooks/full_investigation.ipynb
     │
-    ├─ Phase 3 · User Profiling        → 03_user_behavior.sql
+    ├─ Phase 3 · User Profiling
+    │       → sql/03_user_behavior.sql
+    │       → notebooks/full_investigation.ipynb
     │
-    ├─ Phase 4 · Anomaly Detection     → 04_anomaly_analysis.sql
-    │                                  → 03_investigation.ipynb
+    ├─ Phase 4 · Anomaly Detection
+    │       → sql/04_anomaly_analysis.sql
+    │       → notebooks/full_investigation.ipynb
     │
-    ├─ Phase 5 · Case Investigation    → 05_investigation_cases.sql
+    ├─ Phase 5 · Case Investigation
+    │       → sql/05_investigation_cases.sql
+    │       → notebooks/full_investigation.ipynb
     │
-    ├─ Phase 6 · Dashboard             → dashboard/dashboard_spec.html
+    ├─ Phase 6 · Dashboard
+    │       → dashboard/digital-crime-investigation.pbix
+    │       → dashboard/dashboard_spec.html
     │
-    └─ Phase 7 · Final Report          → reports/investigation_report.html
+    └─ Phase 7 · Final Report
+            → reports/investigation_report.html
 ```
 
 ---
