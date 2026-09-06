@@ -261,4 +261,4 @@ Project ini dipresentasikan bukan sebagai *"Saya membuat dashboard fraud"*, teta
 
 ---
 
-**Baskara Kresna Juniarto** · Data Analyst Portfolio · 2024
+**Baskara Kresna Juniarto** · Data Analyst Portfolio · 2026
